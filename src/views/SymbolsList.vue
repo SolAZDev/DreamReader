@@ -21,14 +21,14 @@ export default class SymbolList extends Vue {
     return {
       Symbols: [],
       AllSymbols: [],
-      filter: ''
+      filter: ""
     };
   }
   created() {
     console.log("At least this works.");
-    SymbolsFile.forEach(entry => {
-      this.$data.AllSymbols.push(entry)
-    })
+    SymbolsFile.forEach(entry: any => {
+      this.$data.AllSymbols.push(entry);
+    });
     // this.$data.AllSymbols = SymbolsFile;
   }
   onLoad(index: any, done: any) {
@@ -41,8 +41,7 @@ export default class SymbolList extends Vue {
       }
 
       // }
-    })
+    });
   }
-
 }
 </script>
