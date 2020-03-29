@@ -1,11 +1,23 @@
 <template lang="pug">
     div
-      .q-pa-md
-        q-list(:filter="filter")
-          q-input(ref="filter" filled v-model="filter" label="Search")
-          q-infinite-scroll(@load="onLoad" :offset="250")
-          q-item(v-for="(symbol, index) in Symbols" clickable v-ripple)
-            q-item-section {{symbol.symbol}}
+      //- v-select(label="symbol" :options="AllSymbols" :reduce="symbol => symbol" @input="SelectSymbol")
+      v-select(label="symbol" :options="paginated" :filterable="false" @open="onOpen" @close="onClose" @search="query => search=query" @input="SelectSymbol")
+        template(#list-footer v-if="hasNextPage")
+          li.loader(ref="load") Loading more symbols
+      //- .q-pa-md
+      //-   q-list(:filter="filter")
+      //-     q-input(ref="filter" filled v-model="filter" label="Search")
+      //-     q-infinite-scroll(@load="onLoad" :offset="250")
+      //-     q-item(v-for="(symbol, index) in Symbols" clickable v-ripple)
+      //-       q-item-section {{symbol.symbol}}
+      .container
+        div(v-if="ActiveSymbol!=null" style="margin-top: 20px")
+          h6 Dream Symbol
+          h4 {{ActiveSymbol.symbol}}
+          h6 Meanings
+          p(v-for="meaning in ActiveSymbol.meanings") {{meaning}}.text-justify
+
+        
 
 </template>
 <script lang="ts">
@@ -21,27 +33,58 @@ export default class SymbolList extends Vue {
     return {
       Symbols: [],
       AllSymbols: [],
-      filter: ""
+      ActiveSymbol: null,
+      observer: null,
+      limit: 25,
+      search: ''
     };
+  }
+  mounted() {
+    this.$data.observer = new IntersectionObserver(this.infiniteScroll);
   }
   created() {
     console.log("At least this works.");
-    SymbolsFile.forEach(entry: any => {
+    SymbolsFile.forEach(entry => {
       this.$data.AllSymbols.push(entry);
     });
     // this.$data.AllSymbols = SymbolsFile;
   }
-  onLoad(index: any, done: any) {
-    console.log("Loading some more");
-    setTimeout(() => {
-      // if (this.$data.Symbols) {
-      console.log(index);
-      for (let i = index; i < 30; i++) {
-        this.$data.Symbols.push(this.$data.AllSymbols[i]);
-      }
 
-      // }
-    });
+  get filtered() {
+    const results = this.$data.AllSymbols.filter(symbol => symbol.symbol.includes(this.$data.search));
+    return results;
+  }
+  get paginated() {
+    return this.filtered.slice(0, this.$data.limit)
+  }
+  get hasNextPage() {
+    return this.paginated.length < this.filtered.length
+  }
+
+  SelectSymbol(value: any) {
+    console.log("Chose " + JSON.stringify(value));
+    this.$data.ActiveSymbol = this.$data.AllSymbols.filter(entry => entry == value)[0];
+  }
+  async onOpen() {
+    if (this.hasNextPage) {
+      await this.$nextTick()
+      this.$data.observer.observe(this.$refs.load)
+    }
+  }
+  onClose() {
+    this.$data.observer.disconnect()
+  }
+  async infiniteScroll([{ isIntersecting, target }]) {
+    if (isIntersecting) {
+      const ul = target.offsetParent
+      const scrollTop = target.offsetParent.scrollTop
+      this.$data.limit += 25
+      await this.$nextTick()
+      ul.scrollTop = scrollTop
+    }
   }
 }
 </script>
+<style lang="sass">
+@import "vue-select/src/scss/vue-select.scss"
+</style>
