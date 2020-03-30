@@ -33,6 +33,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    getSymbolCount: state => {
+      return state.Symbols.length;
+    },
     getAllSymbols: state => {
       return state.Symbols;
     },

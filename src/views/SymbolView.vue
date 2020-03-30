@@ -26,10 +26,18 @@ export default class SymbolView extends Vue {
     this.$data.ActiveSymbol = this.$store.getters.getSymbol(this.$route.params.id);
   }
 
-  mounted() { console.log("Log?"); this.GetSymbol() }
-  created() { console.log("Log?"); this.GetSymbol() }
+  // mounted() { this.GetSymbol() }
+  created() { this.GetSymbol() }
+
+  get SymbolListReady(): boolean {
+    if (this.$store.getters.getSymbolCount > 0) { return true } else { return false }
+  }
+
+  @Watch('SymbolListReady')
   @Watch('$route', { immediate: true, deep: true })
   CheckSymbol() { this.GetSymbol() }
+
+  CheckSymbols2() { this.GetSymbol(); }
 
 }
 </script>
