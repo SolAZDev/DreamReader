@@ -10,12 +10,12 @@
       //-     q-infinite-scroll(@load="onLoad" :offset="250")
       //-     q-item(v-for="(symbol, index) in Symbols" clickable v-ripple)
       //-       q-item-section {{symbol.symbol}}
-      .container
+      //- .container
         div(v-if="ActiveSymbol!=null" style="margin-top: 20px")
           h6 Dream Symbol
           h4 {{ActiveSymbol.symbol}}
           h6 Meanings
-          p(v-for="meaning in ActiveSymbol.meanings") {{meaning}}.text-justify
+          p.text-justify(v-for="meaning in ActiveSymbol.meanings") {{meaning}}
 
         
 
@@ -62,7 +62,7 @@ export default class SymbolList extends Vue {
     return this.paginated.length < this.filtered.length
   }
 
-  SelectSymbol(value: any) {
+  SelectSymbol(value) {
     console.log("Chose " + JSON.stringify(value));
     this.$data.ActiveSymbol = this.$data.AllSymbols.filter(entry => entry == value)[0];
   }
@@ -75,6 +75,7 @@ export default class SymbolList extends Vue {
   onClose() {
     this.$data.observer.disconnect()
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async infiniteScroll([{ isIntersecting, target }]: any[]) {
     if (isIntersecting) {
       const ul = target.offsetParent

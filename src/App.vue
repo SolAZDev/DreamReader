@@ -2,11 +2,27 @@
   div(id="app")
     b-navbar(type="dark" variant="info")
       b-navbar-brand Dream Reader
-    .container(stye="margin-top:20px;")
-      router-view 
+      //- .row.w-100
+        .col
+      SymbolsList.w-100
+      //- router-view 
+
   
 </template>
-
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import SymbolsList from './views/SymbolsList.vue'
+@Component({
+  components: {
+    SymbolsList
+  }
+})
+export default class App extends Vue {
+  mounted() {
+    this.$store.dispatch('LoadSymbols');
+  }
+}
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
