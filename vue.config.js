@@ -1,8 +1,8 @@
 module.exports = {
   pwa: {
-    name: 'DreamReader'
+    name: "DreamReader"
   },
 
-  publicPath: '/DreamReader/dist',
-  assetsDir: 'assets'
-}
+  publicPath: "/DreamReader/",
+  assetsDir: "assets"
+};
