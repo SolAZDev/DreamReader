@@ -32,8 +32,8 @@ export default new Vuex.Store({
       }
     },
     RemoveFoundSymbol(state, id: number) {
-      if (state.SymbolsFound.filter(sym => sym == id).length == 0) {
-        state.SymbolsFound.push(id);
+      if (state.SymbolsFound.indexOf(id) > -1) {
+        state.SymbolsFound.splice(state.SymbolsFound.indexOf(id), 1);
       }
     }
   },
