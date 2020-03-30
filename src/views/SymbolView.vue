@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import * as  SymbolsFile from "@/assets/Symbols.json";
+// import * as SymbolsFile from "../../public/Symbols.json";
 @Component
 export default class SymbolView extends Vue { }
 </script>

@@ -1,6 +1,9 @@
 <template lang="pug">
   div(id="app")
-    router-view 
+    b-navbar(type="dark" variant="info")
+      b-navbar-brand Dream Reader
+    .container(stye="margin-top:20px;")
+      router-view 
   
 </template>
 

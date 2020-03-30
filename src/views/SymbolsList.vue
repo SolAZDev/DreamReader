@@ -22,7 +22,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import * as SymbolsFile from "@/assets/Symbols.json";
+import * as SymbolsFile from "../../public/Symbols.json";
 @Component
 export default class SymbolList extends Vue {
   name = "Home";
@@ -44,6 +44,8 @@ export default class SymbolList extends Vue {
   }
   created() {
     console.log("At least this works.");
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    this.$data.AllSymbols = new Array<Symbol>()
     SymbolsFile.forEach(entry => {
       this.$data.AllSymbols.push(entry);
     });
@@ -51,8 +53,7 @@ export default class SymbolList extends Vue {
   }
 
   get filtered() {
-    const results = this.$data.AllSymbols.filter(symbol => symbol.symbol.includes(this.$data.search));
-    return results;
+    return this.$data.AllSymbols.filter(symbol => symbol.symbol.includes(this.$data.search));
   }
   get paginated() {
     return this.filtered.slice(0, this.$data.limit)
@@ -74,7 +75,7 @@ export default class SymbolList extends Vue {
   onClose() {
     this.$data.observer.disconnect()
   }
-  async infiniteScroll([{ isIntersecting, target }]) {
+  async infiniteScroll([{ isIntersecting, target }]: any[]) {
     if (isIntersecting) {
       const ul = target.offsetParent
       const scrollTop = target.offsetParent.scrollTop
