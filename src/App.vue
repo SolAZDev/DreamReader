@@ -2,10 +2,8 @@
   div(id="app")
     b-navbar(type="dark" variant="info")
       b-navbar-brand Dream Reader
-      //- .row.w-100
-        .col
       SymbolsList.w-100
-      //- router-view 
+    router-view 
 
   
 </template>

@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     // eslint-disable-next-line @typescript-eslint/ban-types
-    Symbols: new Array<Symbol>(),
+    Symbols: Array.from(SymbolsFile),
     SymbolsFound: Array<number>()
   },
   mutations: {
@@ -20,6 +20,7 @@ export default new Vuex.Store({
       state.Symbols = new Array<Symbol>();
       SymbolsFile.forEach(entry => {
         state.Symbols.push({
+          id: entry.id,
           symbol: entry.symbol,
           meanings: entry.meanings as string[]
         });
@@ -39,7 +40,8 @@ export default new Vuex.Store({
       return state.SymbolsFound;
     },
     getSymbol: state => (id: number) => {
-      return state.SymbolsFound.filter(sym => sym == id)[0];
+      // while(state.Symbols.length)
+      return state.Symbols.filter(sym => sym.id == id)[0];
     },
     filterSymbols: state => (query: string) => {
       return state.Symbols.filter(sym =>

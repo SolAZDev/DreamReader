@@ -1,21 +1,35 @@
 <template lang="pug">
-    div.container
-        div(v-if="ActiveSymbol!=null" style="margin-top: 20px")
-            
-          h6.text-center Dream Symbol
-          h4.text-center {{ActiveSymbol.symbol}}
-          h6 Meanings
-          p.text-justify(v-for="meaning in ActiveSymbol.meanings") {{meaning}}
+    div
+      div(v-if="ActiveSymbol!=null" style="margin-top: 20px").container
+        .row
+          .col-10
+            small Dream Symbol
+            h4 {{ActiveSymbol.symbol}}
+          .col-2(align-v="center")
+            button.btn.btn-success Save
+
+          //- h6 Meanings
+        p.text-justify(v-for="(meaning, index) in ActiveSymbol.meanings") {{index+1}}. {{meaning}}
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-// import * as SymbolsFile from "../../public/Symbols.json";
+import { Component, Vue, Watch } from "vue-property-decorator";
 @Component
 export default class SymbolView extends Vue {
   data() {
     return {
-      ActiveSymbol: null
-    }
+      ActiveSymbol: null,
+      Saved: false
+    };
   }
+  GetSymbol() {
+    console.log(this.$route.params.id);
+    this.$data.ActiveSymbol = this.$store.getters.getSymbol(this.$route.params.id);
+  }
+
+  mounted() { console.log("Log?"); this.GetSymbol() }
+  created() { console.log("Log?"); this.GetSymbol() }
+  @Watch('$route', { immediate: true, deep: true })
+  CheckSymbol() { this.GetSymbol() }
+
 }
 </script>
