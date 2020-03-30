@@ -2,11 +2,14 @@
     div
       div(v-if="ActiveSymbol!=null" style="margin-top: 20px").container
         .row
-          .col-10
+          .col-11
             small Dream Symbol
             h4 {{ActiveSymbol.symbol}}
-          .col-2(align-v="center")
-            button.btn.btn-success Save
+          .col-1(align-v="center")
+            button.btn.btn-success(v-if="!Saved" @click="AddToFoundList")
+              b-icon-plus
+            button.btn.btn-danger(v-if="Saved")
+              b-icon-x
 
           //- h6 Meanings
         p.text-justify(v-for="(meaning, index) in ActiveSymbol.meanings") {{index+1}}. {{meaning}}
@@ -24,6 +27,10 @@ export default class SymbolView extends Vue {
   GetSymbol() {
     console.log(this.$route.params.id);
     this.$data.ActiveSymbol = this.$store.getters.getSymbol(this.$route.params.id);
+  }
+  AddToFoundList() {
+    this.$store.dispatch('AddSymbolToFoundList', this.$data.ActiveSymbol.id)
+    this.$data.Saved = true;
   }
 
   // mounted() { this.GetSymbol() }

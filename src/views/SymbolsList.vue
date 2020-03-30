@@ -60,6 +60,9 @@ export default class SymbolList extends Vue {
   }
 }
 </script>
-<style lang="sass">
-@import "vue-select/src/scss/vue-select.scss"
+<style lang="scss">
+@import "vue-select/src/scss/vue-select.scss";
+.vs__search {
+  color: white;
+}
 </style>
