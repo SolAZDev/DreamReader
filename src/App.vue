@@ -12,7 +12,7 @@
       b-navbar(type="dark" variant="primary")
         b-navbar-brand.w-100.text-center(to="/") Dream Reader
       b-list-group
-        b-list-group-item 
+        b-list-group-item(to="/saved")
           b-icon-list-ul
           span Saved Dreams
         b-list-group-item(to="/about")

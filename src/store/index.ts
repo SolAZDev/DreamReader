@@ -30,6 +30,11 @@ export default new Vuex.Store({
       if (state.SymbolsFound.filter(sym => sym == id).length == 0) {
         state.SymbolsFound.push(id);
       }
+    },
+    RemoveFoundSymbol(state, id: number) {
+      if (state.SymbolsFound.filter(sym => sym == id).length == 0) {
+        state.SymbolsFound.push(id);
+      }
     }
   },
   getters: {
@@ -50,6 +55,14 @@ export default new Vuex.Store({
       return state.Symbols.filter(sym =>
         sym.symbol.toLocaleLowerCase().includes(query.toLocaleLowerCase())
       );
+    },
+    getAllSavedSymbols: state => {
+      // eslint-disable-next-line @typescript-eslint/no-array-constructor
+      const symbols = new Array();
+      state.SymbolsFound.forEach(id => {
+        symbols.push(state.Symbols.filter(entry => entry.id == id)[0]);
+      });
+      return symbols;
     }
   },
   actions: {
@@ -58,6 +71,9 @@ export default new Vuex.Store({
     },
     AddSymbolToFoundList(context, id: number) {
       context.commit("AddFoundSymbol", id);
+    },
+    RemoveSymbolFromFoundList(context, id: number) {
+      context.commit("RemoveFoundSymbol", id);
     }
   },
   modules: {}

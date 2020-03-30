@@ -7,7 +7,7 @@
         p Search in specific parts and put the pieces together!
 
       b-row.text-center
-        b-col(cols="6" to="/journal")
+        b-col(cols="6" to="/saved")
           div(style="background: #5CC9FF; border-radius: 5px;")
             h2
               b-icon-list-task

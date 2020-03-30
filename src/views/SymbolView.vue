@@ -8,7 +8,7 @@
           .col-1(align-v="center")
             button.btn.btn-success(v-if="!Saved" @click="AddToFoundList")
               b-icon-plus
-            button.btn.btn-danger(v-if="Saved")
+            button.btn.btn-danger(v-if="Saved" @click="RemoveFromFoundList")
               b-icon-x
 
           //- h6 Meanings
@@ -27,10 +27,15 @@ export default class SymbolView extends Vue {
   GetSymbol() {
     console.log(this.$route.params.id);
     this.$data.ActiveSymbol = this.$store.getters.getSymbol(this.$route.params.id);
+    if (this.$store.getters.getAllSymbolsFound.filter(saved => saved == this.$data.ActiveSymbol.id).length > 0) { this.$data.Saved = true } else { this.$data.Saved = false }
   }
   AddToFoundList() {
     this.$store.dispatch('AddSymbolToFoundList', this.$data.ActiveSymbol.id)
     this.$data.Saved = true;
+  }
+  RemoveFromFoundList() {
+    this.$store.dispatch('RemoveSymbolFromFoundList', this.$data.ActiveSymbol.id)
+    this.$data.Saved = false;
   }
 
   // mounted() { this.GetSymbol() }

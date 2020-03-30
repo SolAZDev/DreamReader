@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import SymbolsList from "../views/SymbolsList.vue";
 import SymbolView from "../views/SymbolView.vue";
+import SavedList from "../views/SavedList.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -24,6 +25,11 @@ const routes = [
     path: "/symbol/:id",
     name: "Symbol",
     component: SymbolView
+  },
+  {
+    path: "/saved",
+    name: "Saved Symbols",
+    component: SavedList
   }
 ];
 
