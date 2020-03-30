@@ -3,6 +3,6 @@ module.exports = {
     name: "DreamReader"
   },
 
-  publicPath: "/DreamReader/",
+  publicPath: "/DreamReader/dist/",
   assetsDir: "assets"
 };
