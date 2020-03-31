@@ -35,6 +35,12 @@ export default new Vuex.Store({
       if (state.SymbolsFound.indexOf(id) > -1) {
         state.SymbolsFound.splice(state.SymbolsFound.indexOf(id), 1);
       }
+    },
+    getSymbolsFromVariable(state, symbols: number[]) {
+      //Dobule Check Much
+      if (symbols.length > 0 || state.SymbolsFound.length > 0) {
+        state.SymbolsFound = Array.from(symbols);
+      }
     }
   },
   getters: {
@@ -74,6 +80,9 @@ export default new Vuex.Store({
     },
     RemoveSymbolFromFoundList(context, id: number) {
       context.commit("RemoveFoundSymbol", id);
+    },
+    LoadSymbolCookies(context, symbols: number[]) {
+      context.commit("getSymbolsFromVariable", symbols);
     }
   },
   modules: {}

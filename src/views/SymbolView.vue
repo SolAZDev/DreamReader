@@ -16,8 +16,10 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
+import VueCookie from "vue-cookie";
 @Component
 export default class SymbolView extends Vue {
+  // this.$cookie = VueCookie;
   data() {
     return {
       ActiveSymbol: null,
@@ -26,30 +28,60 @@ export default class SymbolView extends Vue {
   }
   GetSymbol() {
     console.log(this.$route.params.id);
-    this.$data.ActiveSymbol = this.$store.getters.getSymbol(this.$route.params.id);
-    if (this.$store.getters.getAllSymbolsFound.filter(saved => saved == this.$data.ActiveSymbol.id).length > 0) { this.$data.Saved = true } else { this.$data.Saved = false }
+    this.$data.ActiveSymbol = this.$store.getters.getSymbol(
+      this.$route.params.id
+    );
+    if (
+      this.$store.getters.getAllSymbolsFound.filter(
+        saved => saved == this.$data.ActiveSymbol.id
+      ).length > 0
+    ) {
+      this.$data.Saved = true;
+    } else {
+      this.$data.Saved = false;
+    }
   }
   AddToFoundList() {
-    this.$store.dispatch('AddSymbolToFoundList', this.$data.ActiveSymbol.id)
+    this.$store.dispatch("AddSymbolToFoundList", this.$data.ActiveSymbol.id);
     this.$data.Saved = true;
+    this.SaveCookies();
   }
   RemoveFromFoundList() {
-    this.$store.dispatch('RemoveSymbolFromFoundList', this.$data.ActiveSymbol.id)
+    this.$store.dispatch(
+      "RemoveSymbolFromFoundList",
+      this.$data.ActiveSymbol.id
+    );
     this.$data.Saved = false;
+    this.SaveCookies();
+  }
+  SaveCookies() {
+    this.$cookies.set(
+      "SavedSymbols",
+      JSON.stringify(this.$store.getters.getAllSymbolsFound)
+    );
   }
 
   // mounted() { this.GetSymbol() }
-  created() { this.GetSymbol() }
-
-  get SymbolListReady(): boolean {
-    if (this.$store.getters.getSymbolCount > 0) { return true } else { return false }
+  created() {
+    this.GetSymbol();
   }
 
-  @Watch('SymbolListReady')
-  @Watch('$route', { immediate: true, deep: true })
-  CheckSymbol() { this.GetSymbol() }
+  get SymbolListReady(): boolean {
+    if (this.$store.getters.getSymbolCount > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  CheckSymbols2() { this.GetSymbol(); }
+  @Watch("SymbolListReady")
+  @Watch("$route", { immediate: true, deep: true })
+  CheckSymbol() {
+    this.GetSymbol();
+  }
 
+  CheckSymbols2() {
+    this.GetSymbol();
+  }
 }
 </script>

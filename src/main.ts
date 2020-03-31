@@ -3,6 +3,7 @@ import "mutationobserver-shim";
 import Vue from "vue";
 import "./plugins/bootstrap-vue";
 import "./plugins/vue-select";
+import "./plugins/vue-cookies";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";

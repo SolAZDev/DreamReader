@@ -22,9 +22,9 @@
   
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import SymbolsList from './views/SymbolsList.vue'
-import SidebarMenuDrawer from '@satmaxt/sidebar-menu-drawer'
+import { Component, Vue } from "vue-property-decorator";
+import SymbolsList from "./views/SymbolsList.vue";
+import SidebarMenuDrawer from "@satmaxt/sidebar-menu-drawer";
 @Component({
   components: {
     SymbolsList,
@@ -35,10 +35,17 @@ export default class App extends Vue {
   data() {
     return {
       show: false
-    }
+    };
   }
   mounted() {
-    this.$store.dispatch('LoadSymbols');
+    this.$store.dispatch("LoadSymbols");
+    if (JSON.parse(this.$cookies.get("SavedSymbols")) != null) {
+      // console.log(JSON.parse(this.$cookies.get("SavedSymbols")));
+      this.$store.dispatch(
+        "LoadSymbolCookies",
+        JSON.parse(this.$cookies.get("SavedSymbols"))
+      );
+    }
   }
 }
 </script>
