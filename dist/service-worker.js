@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/DreamReader/dist/precache-manifest.b436b1616748fc1149a6bf5dba984da1.js"
+  "/DreamReader/precache-manifest.4fd5e050f67c3e8e71a21eab3e1f4b8e.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "dreamreader"});
