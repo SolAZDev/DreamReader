@@ -6,19 +6,52 @@
       br
       small Originally Developed by SolAZDev
     br
-    b-row
-      b-col
-        h6.text-center What is this?
-        p.text-justify Dream Reader is an Open Source, Dreams meaning & interpretation web app. Aimed for quick searches and figuring out what something means quickly.
-      b-col
-        h6.text-center Why make it?
-        p.text-justify Frankly, DreamMoods, my personal go to for dream interpretaion, has taken down their app, and at the time of writing, their site has to many issues. Plus, I wanted the accessability of a webiste, in the ease of a phone app.
-      b-col
-        h6.text-center What does it use?
-        p.text-justify DreamReader uses DM's  last app for references. However this was developed with VueJS and Typescript. It made uses of other addons such as Vue-Select and Sidebar-menu-drawer
-      b-col
-        h6.text-center How can I contribute?
-        p.text-justify You can contribute through the Github Repo. We Accept Dream meanings & Interpretations from reliable sources, and Technical work as well. Alternatively, you can donate if you so desarie.
+    div#about
+      b-row
+        b-col
+          h6 What is this?
+          p Dream Reader is an Open Source, Dreams meaning & interpretation Progressive Web App. It is designed with quick searches in mind, to help figure out what a dream could mean quickly.
+        b-col
+          h6 Why make it?
+          p Personally, I had the idea when I noticed my go to source for dream interpretaion, had taken down their mobile apps, and their website began to show several issues that affected usability.
+          p This project was developed as an PWA so it could be 'installed' into multiple devices without taking up space.
+        b-col
+          h6 What does it use?
+          p For Dream Menaings, DreamReader originally started by using 
+            a(href="https://dreammoods.com/" target="_blank") DreamMood's 
+            span menaings as a base. However, this project is open to contributions, and hopes to grow beyond the prexisting base.
+          p Technically, DreamReader uses 
+            a(href="https://vuejs.org/" target="_blank") VueJS 
+            span as a framework, with Vuex & Vue-Router. As of version 1.2 it also uses Vue-Cookies.
+      b-row
+        b-col
+          h6 How can I contribute?
+          p If you wish to contribute to the development, feel free to fork the 
+            a(href="https://github.com/SolAZDev/DreamReader" target="_blank") Github repo 
+            span and submit a pull request. If you wish to report a bug or issue, suggest an improvement, or suggest a dream interpretation, you can sumbit an 
+            a(href="https://github.com/SolAZDev/DreamReader/issues" target="_blank") issue on the repo. 
+            span However, at this time you could donate, 
+            a(href="https://www.paypal.me/SolAZDev" target="_blank") via PayPal. 
+            span Bitcoin and other currencies might come later. 
+            br
+            span Regardless, all contributions are welcomed and much appreciated.
+        b-col
+          h6 Privacy Policy
+          p DreamReader does 
+            b NOT 
+            span collect any session data, nor information that could identify you, and much less sell or give out your data.
+            br
+            span The only data it stores are your Saved Dream Symbols, and it does so as an array, in a cookie that each time it is updated, expires in 7 days.            
+
 </template>
 <style lang="scss" scoped>
+#about {
+  h6 {
+    text-align: center;
+    font-weight: bold;
+  }
+  p {
+    text-align: justify;
+  }
+}
 </style>

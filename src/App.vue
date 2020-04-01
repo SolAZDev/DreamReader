@@ -12,6 +12,9 @@
       b-navbar(type="dark" variant="primary")
         b-navbar-brand.w-100.text-center(to="/") Dream Reader
       b-list-group
+        b-list-group-item(to="/")
+          b-icon-list
+          span Home
         b-list-group-item(to="/saved")
           b-icon-list-ul
           span Saved Dreams
@@ -25,8 +28,6 @@
 import { Component, Vue } from "vue-property-decorator";
 import SymbolsList from "./views/SymbolsList.vue";
 import SidebarMenuDrawer from "@satmaxt/sidebar-menu-drawer";
-import "./plugins/vue-cookies";
-// Vue.use()
 @Component({
   components: {
     SymbolsList,
@@ -56,8 +57,6 @@ export default class App extends Vue {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // text-align: center;
-  // color: #2c3e50;
 }
 .sidebar-menu-drawer__body {
   width: 280px;
