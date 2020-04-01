@@ -25,6 +25,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import SymbolsList from "./views/SymbolsList.vue";
 import SidebarMenuDrawer from "@satmaxt/sidebar-menu-drawer";
+import "./plugins/vue-cookies";
+// Vue.use()
 @Component({
   components: {
     SymbolsList,
@@ -40,7 +42,6 @@ export default class App extends Vue {
   mounted() {
     this.$store.dispatch("LoadSymbols");
     if (JSON.parse(this.$cookies.get("SavedSymbols")) != null) {
-      // console.log(JSON.parse(this.$cookies.get("SavedSymbols")));
       this.$store.dispatch(
         "LoadSymbolCookies",
         JSON.parse(this.$cookies.get("SavedSymbols"))

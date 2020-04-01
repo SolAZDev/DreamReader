@@ -16,7 +16,8 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-import VueCookie from "vue-cookie";
+// import VueCookie from "vue-cookie";
+// Vue.use(VueCookie);
 @Component
 export default class SymbolView extends Vue {
   // this.$cookie = VueCookie;
@@ -55,7 +56,7 @@ export default class SymbolView extends Vue {
     this.SaveCookies();
   }
   SaveCookies() {
-    this.$cookies.set(
+    Vue.$cookies.set(
       "SavedSymbols",
       JSON.stringify(this.$store.getters.getAllSymbolsFound)
     );

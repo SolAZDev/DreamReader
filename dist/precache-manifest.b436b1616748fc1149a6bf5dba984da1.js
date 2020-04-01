@@ -4,27 +4,27 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/DreamReader/dist/Symbols.json"
   },
   {
-    "revision": "37e560df6773e0cd3180",
+    "revision": "605a19e724e016febd75",
     "url": "/DreamReader/dist/assets/css/app.4ae5bcb0.css"
   },
   {
-    "revision": "c1d1c2cc2836253ac013",
+    "revision": "69d73e0cf38111d7cea2",
     "url": "/DreamReader/dist/assets/css/chunk-vendors.4304d73c.css"
   },
   {
-    "revision": "80f973cc3766e55eaf41",
-    "url": "/DreamReader/dist/assets/js/about.f13c89b9.js"
+    "revision": "bc69b437bcdddc8f540e",
+    "url": "/DreamReader/dist/assets/js/about.1bbf0e02.js"
   },
   {
-    "revision": "37e560df6773e0cd3180",
-    "url": "/DreamReader/dist/assets/js/app.53a98d23.js"
+    "revision": "605a19e724e016febd75",
+    "url": "/DreamReader/dist/assets/js/app.c9394453.js"
   },
   {
-    "revision": "c1d1c2cc2836253ac013",
-    "url": "/DreamReader/dist/assets/js/chunk-vendors.781a1aba.js"
+    "revision": "69d73e0cf38111d7cea2",
+    "url": "/DreamReader/dist/assets/js/chunk-vendors.574ca24b.js"
   },
   {
-    "revision": "91c079aad92d44d3c707ac109e53e3d0",
+    "revision": "ca4fe3604696e7b5ef1f805491e5eb92",
     "url": "/DreamReader/dist/index.html"
   },
   {
