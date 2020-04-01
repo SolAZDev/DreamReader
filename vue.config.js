@@ -10,7 +10,7 @@ module.exports = {
     });
   },
 
-  publicPath: '/DreamReader/',
-  assetsDir: 'assets',
-  outputDir: 'docs'
+  publicPath: "/DreamReader/",
+  assetsDir: "assets",
+  outputDir: "dist"
 };
