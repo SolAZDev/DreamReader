@@ -91,14 +91,6 @@ export default class Symbol extends Vue {
 			date: this.$store.getters.getActiveDate,
 			id: this.Dream.id,
 		};
-		console.log(
-			"Saved Dream " +
-				this.Dream.symbol +
-				" to " +
-				this.$store.getters.getActiveDate +
-				"::::" +
-				JSON.stringify(opt)
-		);
 		this.$store.dispatch("RemoveDream", opt);
 	}
 	SaveToHistory(id: number) {
@@ -110,7 +102,7 @@ export default class Symbol extends Vue {
 			saved.forEach((s) => newArray.push(s));
 		}
 		console.log(newArray);
-		localStorage.setItem("history", JSON.stringify(newArray));
+		localStorage.setItem("history", JSON.stringify(newArray.slice(0, 50)));
 	}
 }
 </script>
