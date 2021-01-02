@@ -16,6 +16,7 @@
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.1.0",
     "quasar": "^1.0.0",
+    "vue-bus": "^1.2.1",
     "vue-class-component": "^7.2.2",
     "vue-i18n": "^8.0.0",
     "vue-property-decorator": "^8.3.0",
