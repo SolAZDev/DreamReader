@@ -95,10 +95,10 @@ export default class Symbol extends Vue {
 	}
 	SaveToHistory(id: number) {
 		let lsh = localStorage.getItem("history");
-		let newArray = new Array<number>();
+		let newArray = new Array();
 		newArray.push(id);
 		if (lsh != "null") {
-			const saved = [...new Set(JSON.parse(lsh))] as number[];
+			const saved = new Set(JSON.parse(lsh || "[]"));
 			saved.forEach((s) => newArray.push(s));
 		}
 		console.log(newArray);
