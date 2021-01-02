@@ -14,6 +14,10 @@ const routes: RouteConfig[] = [
         path: "/History",
         component: () => import('pages/History.vue'),
       },
+      {
+        path: "/Saved",
+        component: () => import('pages/Saved.vue'),
+      },
     ]
   },
   

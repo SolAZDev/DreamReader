@@ -4,6 +4,12 @@ export interface SymbolModel {
     meanings: any;
 }
 
+export interface LiveDreamList{
+    date:string;
+    dreams: SymbolModel[];
+    // notes: string;
+}
+
 export interface SavedDreamList{
     date:string;
     dreams: number[];
