@@ -13,7 +13,21 @@ export default store(function ({ Vue }) {
   const Store = new Vuex.Store({
     state:{
       // SavedDreamsDate: Array<string>(),
+      ActiveDate: moment().format('MM/DD/YYYY'),
       SavedDreams: Array<SavedDreamList>(),
+    },
+    getters:{
+      getSavedDreamsList:state=>{
+        return state.SavedDreams;
+      },
+      getActiveDate:state=>{
+        return state.ActiveDate;
+      },
+      dreamIsSavedOnActiveDate:state=>(id:number)=>{
+        const activeDateList = state.SavedDreams.filter(sd=>sd.date===state.ActiveDate);
+        if(activeDateList.length<0){return false;}
+        return activeDateList[0].dreams.includes(id);
+      }
     },
     mutations:{
       //#region Save Data Management
@@ -45,30 +59,38 @@ export default store(function ({ Vue }) {
       //#endregion
       //#region Saved Dreams Management
       addDreamOnDate(state, id:number){
-        let date = moment().format('DD/MM/YYYY');
+        // let date = moment().format('MM/DD/YYYY'); 
+        let date = state.ActiveDate;
         let dream = state.SavedDreams.filter(sd=>sd.date===date);
         if(dream.length>0){ //Found!
-          dream[0].dreams.push(id)
+          if(dream[0].dreams.includes(id)){return;} //Dupe Avoidance
+          dream[0].dreams.unshift(id)
         }else{ //The date doesn't exist
           let tmp = {} as SavedDreamList;
           tmp.date=date;
           tmp.dreams = new Array<number>();
           tmp.dreams.push(id);
-          state.SavedDreams.push(tmp);
+          state.SavedDreams.unshift(tmp);
         }
       },
       removeDreamOnDate(state, opts:{date:string, id:number}){
         let dreams = state.SavedDreams.filter(sd=>sd.date==opts.date);
+        console.log(dreams[0].dreams+"-"+opts.id);
+        console.log(dreams[0].dreams);
+      
         if(dreams.length<0){return;} //Nothing found, how did we get here?
-        dreams[0].dreams.slice(dreams[0].dreams.indexOf(opts.id),1);
+        dreams[0].dreams.splice(dreams[0].dreams.indexOf(opts.id),1);
+        console.log(dreams[0].dreams);
+
       },
       //#endregion
-    },
-    getters:{
-      getSavedDreamsList:state=>{
-        return state.SavedDreams;
+      //#region Other
+      setActiveDate(state, date:string){
+        state.ActiveDate=date;
       }
+      //#endregion
     },
+    
     actions:{
       ReloadSavedData(context){context.commit("loadDatesAndDreams");},
       SaveData(context){context.commit("saveDatesAndDreams");},

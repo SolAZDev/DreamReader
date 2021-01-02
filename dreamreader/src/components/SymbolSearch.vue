@@ -33,7 +33,7 @@ export default class SymbolSearch extends Vue {
   }
 
   get filtered(){return this.DreamDictionary.filter(d=>d.symbol.includes(this.search));}
-  get paginated() { return this.filtered.slice(0, this.limit);}
+  get paginated() { return this.filtered.splice(0, this.limit);}
   get hasNextPage() {return this.paginated.length<this.filtered.length}
   selectSymbol(id:number){
       // console.log("Ey yo got some of dat "+id);
