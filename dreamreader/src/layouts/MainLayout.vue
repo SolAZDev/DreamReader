@@ -1,20 +1,17 @@
 <template lang="pug">
-q-layout(view='lHh Lpr lFf')
+q-layout(view="hHh Lpr fFf")
   q-header(elevated)
     q-toolbar
       q-btn(flat, dense, round, icon='menu', aria-label='Menu', @click='leftDrawerOpen = !leftDrawerOpen')
       SymbolSearch(style="width:90vw; margin:auto;")
 
-  q-drawer(v-model='leftDrawerOpen', show-if-above, bordered, content-class='bg-grey-1')
+  q-drawer(v-model='leftDrawerOpen', show-if-above, bordered, content-class='bg-grey-1', elevated)
     q-list
       q-item-label.text-grey-8(header) Navigation
-        
-      EssentialLink(v-for='link in essentialLinks', :key='link.title', v-bind='link').
-        
+      EssentialLink(v-for='link in essentialLinks', :key='link.title', v-bind='link')
         
   q-page-container
-    router-view.
-      
+    router-view     
       
 </template>
 

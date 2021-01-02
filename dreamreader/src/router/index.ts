@@ -22,6 +22,6 @@ export default route<Store<StateInterface>>(function ({ Vue }) {
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
   })
-
   return Router
 })
+

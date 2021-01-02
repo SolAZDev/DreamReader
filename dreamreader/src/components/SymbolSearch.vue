@@ -16,13 +16,13 @@ vSelect(
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import { SymbolModel } from "../models/models";
-import * as Dict from "../assets/Symbols.json";
+import * as DreamDB from "../utils/dreams";
 import vSelect from "vue-select";
 @Component({
   components: { vSelect },
 })
 export default class SymbolSearch extends Vue {
-  DreamDictionary = Dict.default as unknown as SymbolModel[];
+  DreamDictionary = DreamDB.DreamsDictionary as SymbolModel[];
   limit=50;
   offset=0;
   search='';
@@ -35,15 +35,16 @@ export default class SymbolSearch extends Vue {
   get filtered(){return this.DreamDictionary.filter(d=>d.symbol.includes(this.search));}
   get paginated() { return this.filtered.slice(0, this.limit);}
   get hasNextPage() {return this.paginated.length<this.filtered.length}
-  selectSymbol(id){
+  selectSymbol(id:number){
       console.log("Ey yo got some of dat "+id);
-      sessionStorage.setItem("CurrentDreamId", id);
+      sessionStorage.setItem("CurrentDreamId", id.toString());
       this.$root.$emit('setCurrDreamId', id);
+      this.$router.push("/Symbol");
   }
   async onOpen(){
       if(this.hasNextPage){
           await this.$nextTick();
-        //   this.observer.observe(this.$refs.load);
+          this.observer.observe(this.$refs.load);
       }
   }
 
