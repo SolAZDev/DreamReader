@@ -7,11 +7,16 @@ const routes: RouteConfig[] = [
     children: [
       { path: '', component: () => import('pages/Index.vue') },
       {
-        path: "/Symbol/",
+        path: "/Symbol",
         component: () => import('pages/Symbol.vue'),
+      },
+      {
+        path: "/History",
+        component: () => import('pages/History.vue'),
       },
     ]
   },
+  
 
   // Always leave this as last one,
   // but you can also remove it

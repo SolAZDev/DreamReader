@@ -26,7 +26,7 @@ export default class SymbolSearch extends Vue {
   limit=50;
   offset=0;
   search='';
-  observer=null as IntersectionObserver;
+  observer={} as IntersectionObserver;
 
   mounted() {
       this.$data.observer = new IntersectionObserver(this.infiniteScroll);
@@ -36,7 +36,7 @@ export default class SymbolSearch extends Vue {
   get paginated() { return this.filtered.slice(0, this.limit);}
   get hasNextPage() {return this.paginated.length<this.filtered.length}
   selectSymbol(id:number){
-      console.log("Ey yo got some of dat "+id);
+      // console.log("Ey yo got some of dat "+id);
       sessionStorage.setItem("CurrentDreamId", id.toString());
       this.$root.$emit('setCurrDreamId', id);
       this.$router.push("/Symbol");

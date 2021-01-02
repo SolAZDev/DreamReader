@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@types/vue-select": "^2.5.1",
     "core-js": "^3.6.5",
+    "moment": "^2.29.1",
     "pug": "^3.0.0",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.1.0",
