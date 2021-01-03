@@ -11,10 +11,17 @@
     "deploy": "push-dir --dir=dist/spa --branch=gh-pages --force"
   },
   "dependencies": {
+    "@capacitor/android": "^2.4.5",
+    "@capacitor/cli": "^2.4.5",
+    "@capacitor/core": "^2.4.5",
     "@quasar/extras": "^1.0.0",
     "@types/vue-select": "^2.5.1",
     "core-js": "^3.6.5",
+    "electron": "^9.0.0",
+    "electron-builder": "^22.9.1",
+    "electron-packager": "^15.2.0",
     "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-quasar": "^1.0.0",
     "gh-pages": "^3.1.0",
     "moment": "^2.29.1",
     "prettier": "^2.2.1",
@@ -34,6 +41,9 @@
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.3.0",
     "babel-eslint": "^10.0.1",
+    "devtron": "^1.4.0",
+    "electron-debug": "^3.0.1",
+    "electron-devtools-installer": "^3.0.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-loader": "^3.0.3",
@@ -42,7 +52,8 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.1.2",
-    "push-dir": "^0.4.1"
+    "push-dir": "^0.4.1",
+    "workbox-webpack-plugin": "^5.0.0"
   },
   "browserslist": [
     "last 10 Chrome versions",
