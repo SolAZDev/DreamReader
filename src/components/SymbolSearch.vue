@@ -14,10 +14,12 @@ vSelect(
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import { SymbolModel } from "../models/models";
-import * as DreamDB from "../utils/dreams";
-import vSelect from "vue-select";
+	/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { Vue, Component } from 'vue-property-decorator';
+import { SymbolModel } from '../models/models';
+import * as DreamDB from '../utils/dreams';
+import vSelect from 'vue-select';
 @Component({
 	components: { vSelect },
 })
@@ -25,7 +27,7 @@ export default class SymbolSearch extends Vue {
 	DreamDictionary = DreamDB.DreamsDictionary as SymbolModel[];
 	limit = 50;
 	offset = 0;
-	search = "";
+	search = '';
 	observer = {} as IntersectionObserver;
 
 	mounted() {
@@ -43,10 +45,10 @@ export default class SymbolSearch extends Vue {
 	}
 	selectSymbol(id: number) {
 		// console.log("Ey yo got some of dat "+id);
-		sessionStorage.setItem("CurrentDreamId", id.toString());
-		this.$root.$emit("setCurrDreamId", id);
-		let query = Object.assign({}, this.$route.query);
-		this.$router.push("/Symbol");
+		sessionStorage.setItem('CurrentDreamId', id.toString());
+		this.$root.$emit('setCurrDreamId', id);
+		// let query = Object.assign({}, this.$route.query);
+		void this.$router.push('/Symbol');
 	}
 	async onOpen() {
 		if (this.hasNextPage) {
@@ -56,9 +58,11 @@ export default class SymbolSearch extends Vue {
 	}
 
 	onClose() {
-		this.$data.observer.disconnect();
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+		// this.$data.observer.disconnect();
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	async infiniteScroll([{ isIntersecting, target }]: any[]) {
 		if (isIntersecting) {
 			const ul = target.offsetParent;
