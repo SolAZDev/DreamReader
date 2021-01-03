@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
-    "deploy": "push-dir --dir=dist/spa --branch=gh-pages"
+    "deploy": "push-dir --dir=dist/spa --branch=gh-pages --force"
 
   },
   "dependencies": {
