@@ -33,28 +33,28 @@ q-page(padding)
 						p(style="text-alignment: justify") {{ item }}
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import { SymbolModel } from "../models/models";
-import * as DreamDB from "../utils/dreams";
-import moment from "moment";
-import { log } from "util";
+import { Vue, Component } from 'vue-property-decorator';
+import { SymbolModel } from '../models/models';
+import * as DreamDB from '../utils/dreams';
+import moment from 'moment';
+import { log } from 'util';
 @Component
 export default class SymbolView extends Vue {
 	db = DreamDB;
 	saveable = true;
 	Dream = {
 		id: -1,
-		symbol: "Please find and select a dream.",
-		meanings: ["The Symbols will be displayed here"],
+		symbol: 'Please find and select a dream.',
+		meanings: ['The Symbols will be displayed here'],
 	} as SymbolModel;
 	created() {
 		this.$root.$on(
-			"setCurrDreamId",
+			'setCurrDreamId',
 			(id: number) => (this.Dream = this.loadDream(id))
 		);
 	}
 	mounted() {
-		const id = sessionStorage.getItem("CurrentDreamId");
+		const id = sessionStorage.getItem('CurrentDreamId');
 		if (id != null) {
 			this.Dream = this.loadDream(parseInt(id));
 		}
@@ -68,7 +68,7 @@ export default class SymbolView extends Vue {
 		let err = {
 			id: 0,
 			symbol: "404'd",
-			meanings: ["Symbol not found??"],
+			meanings: ['Symbol not found??'],
 		};
 		this.SaveToHistory(id);
 		const res = DreamDB.getDream(id);
@@ -79,33 +79,33 @@ export default class SymbolView extends Vue {
 	}
 	SaveDream() {
 		console.log(
-			"Saved Dream " +
+			'Saved Dream ' +
 				this.Dream.symbol +
-				" to " +
+				' to ' +
 				this.$store.getters.getActiveDate
 		);
 
-		this.$store.dispatch("SaveDream", this.Dream.id);
+		this.$store.dispatch('SaveDream', this.Dream.id);
 	}
 	RemoveDream() {
 		const opt = {
 			date: this.$store.getters.getActiveDate,
 			id: this.Dream.id,
 		};
-		this.$store.dispatch("RemoveDream", opt);
+		this.$store.dispatch('RemoveDream', opt);
 	}
 	SaveToHistory(id: number) {
-		let lsh = localStorage.getItem("history");
-		let newArray = new Array();
+		let lsh = localStorage.getItem('history');
+		let newArray = [];
 		newArray.push(id);
-		if (lsh != "null") {
-			const ogArr = Array.from(JSON.parse(lsh || "[]"));
+		if (lsh != 'null') {
+			const ogArr = Array.from(JSON.parse(lsh || '[]'));
 			const saved = [...new Set(ogArr)];
 			saved.forEach((s) => newArray.push(s));
 		}
 		const fArray = [...new Set(newArray)];
 		
-		localStorage.setItem("history", JSON.stringify(fArray.slice(0,50)));
+		localStorage.setItem('history', JSON.stringify(fArray.slice(0,50)));
 	}
 }
 </script>
