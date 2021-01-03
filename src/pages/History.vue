@@ -1,7 +1,6 @@
 <template lang="pug">
   q-page(padding)
     h5.text-center History  
-    small.text-center Bugs were found last minute, we're working on it.
     q-list(bordered, separator)
       q-item(clickable, v-ripple, v-for="dream in dreams", @click="goToDream(dream.id)")
         q-item-label {{dream.symbol}}

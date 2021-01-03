@@ -70,7 +70,7 @@ export default class SymbolView extends Vue {
 			symbol: "404'd",
 			meanings: ["Symbol not found??"],
 		};
-		// this.SaveToHistory(id);
+		this.SaveToHistory(id);
 		const res = DreamDB.getDream(id);
 		if (res != null) {
 			return res;
@@ -103,13 +103,9 @@ export default class SymbolView extends Vue {
 			const saved = [...new Set(ogArr)];
 			saved.forEach((s) => newArray.push(s));
 		}
-		console.log(newArray);
-		const sfArray = newArray.slice(0, 50);
-		console.log("SF:"+sfArray);
-		const fArray = [...new Set(sfArray)];
-		console.log("Fi"+fArray);
+		const fArray = [...new Set(newArray)];
 		
-		localStorage.setItem("history", JSON.stringify(fArray));
+		localStorage.setItem("history", JSON.stringify(fArray.slice(0,50)));
 	}
 }
 </script>
