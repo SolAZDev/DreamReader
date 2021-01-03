@@ -37,7 +37,6 @@ import { Vue, Component } from 'vue-property-decorator';
 import { SymbolModel } from '../models/models';
 import * as DreamDB from '../utils/dreams';
 import moment from 'moment';
-import { log } from 'util';
 @Component
 export default class SymbolView extends Vue {
 	db = DreamDB;

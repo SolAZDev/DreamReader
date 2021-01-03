@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
-    "deploy": "push-dir --dir=dist/spa --branch=gh-pages --force"
+    "deploy": "push-dir --dir=dist/pwa --branch=gh-pages --force"
   },
   "dependencies": {
     "@capacitor/android": "^2.4.5",
@@ -17,9 +17,6 @@
     "@quasar/extras": "^1.0.0",
     "@types/vue-select": "^2.5.1",
     "core-js": "^3.6.5",
-    "electron": "^9.0.0",
-    "electron-builder": "^22.9.1",
-    "electron-packager": "^15.2.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-quasar": "^1.0.0",
     "gh-pages": "^3.1.0",
