@@ -1,6 +1,26 @@
-# DreamReader
+# DreamReader (dreamreader)
 
-A Dream Interpretation Dictionary, Inspired by the (still broken) DreamMoods site and app.
+A dream interpretation dictionary
 
-This is the Quasar remake branch. (v2-dev)
+## Install the dependencies
+```bash
+yarn
+```
 
+### Start the app in development mode (hot-code reloading, error reporting, etc.)
+```bash
+quasar dev
+```
+
+### Lint the files
+```bash
+yarn run lint
+```
+
+### Build the app for production
+```bash
+quasar build
+```
+
+### Customize the configuration
+See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
