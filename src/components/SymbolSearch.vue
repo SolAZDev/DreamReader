@@ -45,6 +45,7 @@ export default class SymbolSearch extends Vue {
 		// console.log("Ey yo got some of dat "+id);
 		sessionStorage.setItem("CurrentDreamId", id.toString());
 		this.$root.$emit("setCurrDreamId", id);
+		let query = Object.assign({}, this.$route.query);
 		this.$router.push("/Symbol");
 	}
 	async onOpen() {

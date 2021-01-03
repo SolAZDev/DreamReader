@@ -13,7 +13,13 @@
       "breakOnLoad": true,
       "sourceMapPathOverrides": {
         "webpack:///./src/*": "${webRoot}/*"
-      }
+      },
+      "pathMappings": [
+        {
+          "url": "webpack:///src",
+          "path": "${workspaceFolder}/src"
+        }
+      ]
     }
   ]
 }

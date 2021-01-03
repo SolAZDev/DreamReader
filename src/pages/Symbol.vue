@@ -37,8 +37,9 @@ import { Vue, Component } from "vue-property-decorator";
 import { SymbolModel } from "../models/models";
 import * as DreamDB from "../utils/dreams";
 import moment from "moment";
+import { log } from "util";
 @Component
-export default class Symbol extends Vue {
+export default class SymbolView extends Vue {
 	db = DreamDB;
 	saveable = true;
 	Dream = {
@@ -69,7 +70,7 @@ export default class Symbol extends Vue {
 			symbol: "404'd",
 			meanings: ["Symbol not found??"],
 		};
-		this.SaveToHistory(id);
+		// this.SaveToHistory(id);
 		const res = DreamDB.getDream(id);
 		if (res != null) {
 			return res;
@@ -98,11 +99,17 @@ export default class Symbol extends Vue {
 		let newArray = new Array();
 		newArray.push(id);
 		if (lsh != "null") {
-			const saved = new Set(JSON.parse(lsh || "[]"));
+			const ogArr = Array.from(JSON.parse(lsh || "[]"));
+			const saved = [...new Set(ogArr)];
 			saved.forEach((s) => newArray.push(s));
 		}
 		console.log(newArray);
-		localStorage.setItem("history", JSON.stringify(newArray.slice(0, 50)));
+		const sfArray = newArray.slice(0, 50);
+		console.log("SF:"+sfArray);
+		const fArray = [...new Set(sfArray)];
+		console.log("Fi"+fArray);
+		
+		localStorage.setItem("history", JSON.stringify(fArray));
 	}
 }
 </script>
