@@ -26,6 +26,18 @@ const routes: RouteConfig[] = [
         path: '/Settings',
         component: () => import('pages/SettingsPage.vue'),
       },
+      {
+        path: '/Privacy',
+        component: () => import('pages/Privacy.vue'),
+      },
+      {
+        path: '/Note',
+        component: () => import('pages/NoteView.vue'),
+      },
+      {
+        path: '/NoteEdit',
+        component: () => import('pages/NoteEdit.vue'),
+      },
     ],
   },
 
