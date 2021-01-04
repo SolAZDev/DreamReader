@@ -1,21 +1,28 @@
 <template lang="pug">
-vSelect(
-	label="symbol",
-	:options="paginated",
-	:filterable="false",
-	@search="(q) => (search = q)",
-	@open="onOpen",
-	@close="onClose",
-	@input="selectSymbol",
-	:reduce="(symbol) => symbol.id"
-)
-	template(#list-footer, v-if="hasNextPage")
-		li.loader(ref="load") Loading more symbols
+.row
+	//- .col-3
+		div {{DreamDictionary[0]}}
+	q-select.col(
+		filled,
+		use-input,
+		clerable,
+		label="Search Dreams"
+		label-color="white",
+		color="white"
+		v-model="selected",
+		:options="paginated",
+		@filter="filterFn",
+		@virtual-scroll="onScroll",
+		@input="selectSymbol",
+		emit-value,
+		map-options)
+		template(v-slot:no-option)
+			q-item
+				q-item-section No Results
+
 </template>
 
 <script lang="ts">
-	/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Vue, Component } from 'vue-property-decorator';
 import { SymbolModel } from '../models/models';
 import * as DreamDB from '../utils/dreams';
@@ -24,54 +31,55 @@ import vSelect from 'vue-select';
 	components: { vSelect },
 })
 export default class SymbolSearch extends Vue {
-	DreamDictionary = DreamDB.DreamsDictionary as SymbolModel[];
-	limit = 50;
-	offset = 0;
+	DB=DreamDB;
+	DreamDictionary = DreamDB.SerchableDictionary as {value:number,label:string}[]
+	selected=null;
 	search = '';
-	observer = {} as IntersectionObserver;
+	limit = 50;
+	nextPage=2;
+	loading=false;
+	lastPage = Math.ceil(this.filtered.length/this.limit)
 
 	mounted() {
-		this.$data.observer = new IntersectionObserver(this.infiniteScroll);
+		// this.$data.observer = new IntersectionObserver(this.infiniteScroll);
 	}
 
 	get filtered() {
-		return this.DreamDictionary.filter((d) => d.symbol.toLocaleLowerCase().includes(this.search));
+		return this.DreamDictionary.filter((d) => d.label.toLocaleLowerCase().includes(this.search));
 	}
 	get paginated() {
-		return this.filtered.splice(0, this.limit);
-	}
-	get hasNextPage() {
-		return this.paginated.length < this.filtered.length;
+		return this.filtered.splice(0, this.limit * (this.nextPage-1));
 	}
 	selectSymbol(id: number) {
-		// console.log("Ey yo got some of dat "+id);
 		sessionStorage.setItem('CurrentDreamId', id.toString());
 		this.$root.$emit('setCurrDreamId', id);
-		// let query = Object.assign({}, this.$route.query);
 		void this.$router.push('/Symbol');
 	}
-	async onOpen() {
-		if (this.hasNextPage) {
-			await this.$nextTick();
-			// this.observer.observe(this.$refs.load);
-		}
+	filterFn(val:string, update:any, abort:any){
+		setTimeout(()=>{
+			update(()=>{
+				this.search=val.toLowerCase();
+				// this.options = this.DreamDictionary.filter(dream=>dream.label.toLowerCase().includes(val.toLowerCase())).splice(0,50);
+			}),300
+		})
 	}
 
-	onClose() {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		// this.$data.observer.disconnect();
+	onScroll({to, ref}:any){
+		const lastIndex = this.paginated.length-1;
+		if(!this.loading && this.nextPage<this.lastPage && to===lastIndex){
+			this.loading=true;
+			setTimeout(()=>{
+				this.nextPage++
+				this.$nextTick(()=>{
+					ref.refresh();
+					this.loading=false;
+				})
+			},500);
+		}
+
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	async infiniteScroll([{ isIntersecting, target }]: any[]) {
-		if (isIntersecting) {
-			const ul = target.offsetParent;
-			const scrollTop = target.offsetParent.scrollTop;
-			this.$data.limit += 25;
-			await this.$nextTick();
-			ul.scrollTop = scrollTop;
-		}
-	}
+	
 }
 </script>
 <style lang="sass">
@@ -79,4 +87,8 @@ export default class SymbolSearch extends Vue {
 
 .vs__selected
   color: #fff
+
+.q-field__native
+  color: white
+
 </style>
