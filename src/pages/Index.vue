@@ -25,6 +25,7 @@ q-page(padding)
 				q-card-section
 					p Known Bugs
 					p - Search bar may sometimes show result and then show 'no results'
+						p Current Workaround: Disable Infinite Scroll. Please be specific when searching.
 </template>
 
 <script lang="ts">

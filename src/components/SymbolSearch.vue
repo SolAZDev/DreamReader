@@ -12,7 +12,6 @@
 		v-model="selected",
 		:options="paginated",
 		@filter="filterFn",
-		@virtual-scroll="onScroll",
 		@input="selectSymbol",
 		emit-value,
 		map-options)
@@ -20,6 +19,7 @@
 			q-item
 				q-item-section No Results
 
+		//- @virtual-scroll="onScroll",
 </template>
 
 <script lang="ts">
@@ -60,6 +60,7 @@ export default class SymbolSearch extends Vue {
 	filterFn(val:string, update:any, abort:any){
 		setTimeout(()=>{
 			update(()=>{
+				this.nextPage=2;
 				this.search=val.toLowerCase();
 				// this.options = this.DreamDictionary.filter(dream=>dream.label.toLowerCase().includes(val.toLowerCase())).splice(0,50);
 			}),300
