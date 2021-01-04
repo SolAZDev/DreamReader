@@ -1,11 +1,12 @@
 <template lang="pug">
 	q-page(padding)
-		h5.text-center History  
+		.text-h5.text-center History  
 		.text-center The last {{limit}} symbols you've saved, will appear here.
 		.text-center(v-if="dreams.length<1") But it seems you haven't checked anything out.
-		q-list(bordered, separator, v-if="dreams.length>0")
+		q-list(bordered, separator, v-if="dreams.length>0" style="margin-top:10px")
 			q-item(clickable, v-ripple, v-for="dream in dreams", @click="goToDream(dream.id)")
-				q-item-label {{dream.symbol}}
+				q-item-label 
+					.text-h6 {{dream.symbol}}
 
 		
 		

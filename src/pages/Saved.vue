@@ -1,7 +1,8 @@
 <template lang="pug">
 q-page(padding)
-	h5.text-center Saved Dreams
+	.text-h5.text-center Saved Dreams
 	.text-center All saved Symbols will appear here, by date. 
+	br
 	.text-center(v-if="SavedDreams.length<1") But I can't seem to find any saved dreams.
 	q-list(bordered, separator v-if="SavedDreams.length>0")
 		q-expansion-item(
