@@ -10,7 +10,7 @@
     q-separator(inset)
     q-card-section.q-pt-none(style="padding-top:15px;")
       p.text-center(v-if="content==null||''") I didn't find anything for this date. Please, feel free to add notes and describe your dream!
-      p(v-if="content!=null||''") {{content}}
+      p(v-if="content!=null||''" v-html="content")
 </template>
 
 <script lang="ts">
@@ -35,5 +35,5 @@ export default class NoteView extends Vue {
 </script>
 <style lang="sass" scoped>
 .q-card
-  min-height: 79vh
+  min-height: 86.5vh
 </style>

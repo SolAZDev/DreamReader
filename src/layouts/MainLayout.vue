@@ -34,6 +34,7 @@ export default class MainLayout extends Vue {
 		{ name: 'home', to: '/', text: 'Home', icon: 'home' },
 		{ name: 'symbol', to: '/Symbol', text: 'Symbol', icon: 'cloud' },
 		{ name: 'saved', to: '/Saved', text: 'Saved', icon: 'bookmarks' },
+		{ name: 'notes', to: '/Note', text: 'Notes', icon: 'notes' },
 		{ name: 'history', to: '/History', text: 'History', icon: 'history' },
 		// {to:'/', text: 'Notes', icon:'cloud'}
 	];
