@@ -5,6 +5,10 @@ q-page(padding)
 			h4 DreamReader
 			small Dream Interpretation and Journal app
 			p.text-negative Early Development Stages - Expect (but please report) Bugs!
+		.col-12
+			.row.q-gutter-md
+				.col(v-for="link in mainLinks")
+					q-btn(:to="link.to" stack :label="link.text" :icon="link.icon", size="lg" style="padding:20px; width:100%")
 		.col
 			q-card
 				q-card-section
@@ -28,7 +32,14 @@ import { Vue, Component } from "vue-property-decorator";
 
 @Component({
 })
-export default class PageIndex extends Vue {}
+export default class PageIndex extends Vue {
+	 mainLinks = [
+		{icon:"calendar_today", to:"/Date", text:"Change Active Date"},
+		{icon:"settings", to:"/Settings", text:"Settings"},
+		{icon:"privacy_tip", to:"/PrivacyPolicy	", text:"Privacy Policy"},
+		{icon:"info", to:"/About", text:"About Dream Reader"},
+	] 
+}
 </script>
 <style lang="sass">
 #title

@@ -53,7 +53,9 @@ export default class SymbolSearch extends Vue {
 	selectSymbol(id: number) {
 		sessionStorage.setItem('CurrentDreamId', id.toString());
 		this.$root.$emit('setCurrDreamId', id);
-		void this.$router.push('/Symbol');
+		if(this.$route.path!="/Symbol"){
+			 this.$router.push('/Symbol');
+		}
 	}
 	filterFn(val:string, update:any, abort:any){
 		setTimeout(()=>{
