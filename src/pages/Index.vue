@@ -2,7 +2,7 @@
 q-page(padding)
 	.row.q-gutter-sm
 		#title.col-12
-			h1 DreamReader
+			h4 DreamReader
 			small Dream Interpretation and Journal app
 			p.text-negative Early Development Stages - Expect (but please report) Bugs!
 		.col
@@ -24,12 +24,9 @@ q-page(padding)
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from "components/models";
-import ExampleComponent from "components/ClassComponent.vue";
 import { Vue, Component } from "vue-property-decorator";
 
 @Component({
-	components: { ExampleComponent },
 })
 export default class PageIndex extends Vue {}
 </script>
