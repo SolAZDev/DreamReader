@@ -6,10 +6,16 @@ q-page(padding)
 	q-list(bordered, separator v-if="SavedDreams.length>0")
 		q-expansion-item(
 			expand-separator,
-			icon="cal",
 			v-for="dreams in SavedDreams",
-			:label="Moment(dreams.date).format('MMMM Do, YYYY')"
-		)
+			)
+			template(v-slot:header)
+				//- q-item-section(avatar)
+					q-icon(name="calendar_today")
+				q-item-section {{Moment(dreams.date).format('MMMM Do, YYYY')}}
+				q-item-section(side)
+					q-btn(icon="notes" round flat @click="openNote(dreams.date)")
+					
+
 			q-card
 				q-card-section
 					q-list(bordered, rounded, separator)
@@ -60,6 +66,11 @@ export default class Saved extends Vue {
 		sessionStorage.setItem("CurrentDreamId", id.toString());
 		this.$root.$emit("setCurrDreamId", id);
 		this.$router.push("/Symbol");
+	}
+
+	openNote(date:string){
+		this.$store.dispatch("SetActiveDate",date);
+		this.$router.push('/Note');
 	}
 
 	RemoveDream(date: string, id: number) {

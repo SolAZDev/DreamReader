@@ -23,8 +23,8 @@ q-page(padding)
 		.col
 			q-card
 				q-card-section
-					p New Features Coming!
-					p New Features from the Wishlist are Notes per-day, setting the active date, dark mode.
+					p Known Bugs
+					p - Search bar may sometimes show result and then show 'no results'
 </template>
 
 <script lang="ts">
@@ -36,7 +36,7 @@ export default class PageIndex extends Vue {
 	 mainLinks = [
 		{icon:"calendar_today", to:"/Date", text:"Change Active Date"},
 		{icon:"settings", to:"/Settings", text:"Settings"},
-		{icon:"privacy_tip", to:"/PrivacyPolicy	", text:"Privacy Policy"},
+		{icon:"privacy_tip", to:"/Privacy", text:"Privacy Policy"},
 		{icon:"info", to:"/About", text:"About Dream Reader"},
 	] 
 }
