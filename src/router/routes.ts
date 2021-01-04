@@ -1,4 +1,4 @@
-import { RouteConfig } from 'vue-router'
+import { RouteConfig } from 'vue-router';
 
 const routes: RouteConfig[] = [
   {
@@ -7,27 +7,34 @@ const routes: RouteConfig[] = [
     children: [
       { path: '', component: () => import('pages/Index.vue') },
       {
-        path: "/Symbol",
+        path: '/Symbol',
         component: () => import('pages/Symbol.vue'),
       },
       {
-        path: "/History",
+        path: '/History',
         component: () => import('pages/History.vue'),
       },
       {
-        path: "/Saved",
+        path: '/Saved',
         component: () => import('pages/Saved.vue'),
       },
-    ]
+      {
+        path: '/Date',
+        component: () => import('pages/DateSet.vue'),
+      },
+      {
+        path: '/Settings',
+        component: () => import('pages/SettingsPage.vue'),
+      },
+    ],
   },
-  
 
   // Always leave this as last one,
   // but you can also remove it
   {
     path: '*',
-    component: () => import('pages/Error404.vue')
-  }
-]
+    component: () => import('pages/Error404.vue'),
+  },
+];
 
-export default routes
+export default routes;

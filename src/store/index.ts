@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable prefer-const */
 import { store } from 'quasar/wrappers';
-import { SavedDreamList } from 'src/models/models';
+import { SavedDreamList, Settings } from 'src/models/models';
 import Vuex from 'vuex';
 import moment from 'moment';
 
@@ -10,9 +10,9 @@ export default store(function ({ Vue }) {
 
   const Store = new Vuex.Store({
     state: {
-      // SavedDreamsDate: Array<string>(),
       ActiveDate: moment().format('MM/DD/YYYY'),
       SavedDreams: Array<SavedDreamList>(),
+      Settings: { darkMode: false } as Settings,
     },
     getters: {
       getSavedDreamsList: (state) => {
@@ -28,11 +28,23 @@ export default store(function ({ Vue }) {
         const activeDateList = state.SavedDreams.filter(
           (sd) => sd.date === state.ActiveDate
         );
-        if (activeDateList.length < 0) {
+        if (activeDateList.length == 0) {
           return false;
-        } else {
-          return activeDateList[0].dreams.includes(id);
         }
+        console.log(activeDateList);
+        return activeDateList[0].dreams.includes(id);
+      },
+      getSavedDates: (state) => {
+        let saveDates = [] as string[];
+        const sDated = localStorage.getItem('SavedDates');
+        if (sDated == null) {
+          return saveDates;
+        }
+        saveDates = JSON.parse(sDated) as string[];
+        return saveDates;
+      },
+      getSettings: (state) => {
+        return state.Settings;
       },
     },
     mutations: {
@@ -103,6 +115,18 @@ export default store(function ({ Vue }) {
       setActiveDate(state, date: string) {
         state.ActiveDate = date;
       },
+      LoadSettings(state) {
+        const settJson = localStorage.getItem('settings');
+        if (settJson == null) {
+          return;
+        }
+        const sett = JSON.parse(settJson) as Settings;
+        state.Settings = sett;
+      },
+      SaveSettings(state, opts: Settings) {
+        state.Settings = opts;
+        localStorage.setItem('settings', JSON.stringify(opts));
+      },
       //#endregion
     },
 
@@ -120,6 +144,15 @@ export default store(function ({ Vue }) {
       RemoveDream(context, opts: { date: string; id: number }) {
         context.commit('removeDreamOnDate', opts);
         this.dispatch('SaveData');
+      },
+      SetActiveDate(context, date: string) {
+        context.commit('setActiveDate', date);
+      },
+      LoadSettigs(context) {
+        context.commit('LoadSettings');
+      },
+      SaveSettings(context, opts: Settings) {
+        context.commit('SaveSettings', opts);
       },
     },
   });

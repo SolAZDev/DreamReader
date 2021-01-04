@@ -8,7 +8,7 @@ q-page(padding)
 		.col-12
 			.row.q-gutter-md
 				.col(v-for="link in mainLinks")
-					q-btn(:to="link.to" stack :label="link.text" :icon="link.icon", size="lg" style="padding:20px; width:100%")
+					q-btn(:to="link.to" stack :label="link.text" :icon="link.icon", size="lg" style="padding:20px; width:100%; height:150px;")
 		.col
 			q-card
 				q-card-section
