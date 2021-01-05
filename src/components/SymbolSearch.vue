@@ -10,7 +10,6 @@ q-select(
 	:options="paginated",
 	@filter="filterFn",
 	@input="selectSymbol",
-	@click="debug()"
 	emit-value,
 	map-options
 	popup-content-class="searchMenu")
@@ -39,9 +38,6 @@ export default class SymbolSearch extends Vue {
 
 	mounted() {
 		// this.$data.observer = new IntersectionObserver(this.infiniteScroll);
-	}
-	debug(){
-	debugger;
 	}
 
 	get filtered() {
