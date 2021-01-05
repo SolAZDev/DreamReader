@@ -1,25 +1,22 @@
 <template lang="pug">
-.row
-	//- .col-3
-		div {{DreamDictionary[0]}}
-	q-select.col(
-		filled,
-		use-input,
-		clerable,
-		label="Search Dreams"
-		label-color="white",
-		color="white"
-		v-model="selected",
-		:options="paginated",
-		@filter="filterFn",
-		@input="selectSymbol",
-		emit-value,
-		map-options)
-		template(v-slot:no-option)
-			q-item
-				q-item-section No Results
-
-		//- @virtual-scroll="onScroll",
+q-select(
+	filled,
+	use-input,
+	clerable,
+	label="Search Dreams"
+	label-color="white",
+	color="white"
+	v-model="selected",
+	:options="paginated",
+	@filter="filterFn",
+	@input="selectSymbol",
+	@click="debug()"
+	emit-value,
+	map-options
+	popup-content-class="searchMenu")
+	template(v-slot:no-option)
+		q-item
+			q-item-section No Results
 </template>
 
 <script lang="ts">
@@ -42,6 +39,9 @@ export default class SymbolSearch extends Vue {
 
 	mounted() {
 		// this.$data.observer = new IntersectionObserver(this.infiniteScroll);
+	}
+	debug(){
+	debugger;
 	}
 
 	get filtered() {
@@ -66,7 +66,6 @@ export default class SymbolSearch extends Vue {
 			}),300
 		})
 	}
-
 	onScroll({to, ref}:any){
 		const lastIndex = this.paginated.length-1;
 		if(!this.loading && this.nextPage<this.lastPage && to===lastIndex){
@@ -79,19 +78,14 @@ export default class SymbolSearch extends Vue {
 				})
 			},500);
 		}
-
 	}
-
-	
 }
 </script>
 <style lang="sass">
-@import "vue-select/src/scss/vue-select.scss"
-
-.vs__selected
-  color: #fff
-
 .q-field__native
   color: white
+
+.searchMenu
+  max-height: 50% !important
 
 </style>
