@@ -9,9 +9,8 @@ q-layout(view='hHh lpR fFf')
 
 	q-footer.bg-gray-1.text-white(elevated)
 		q-tabs(align='center', v-model='tab')
-			q-route-tab(
+			q-route-tab.dText(
 				v-for='tab in links',
-				dense
 				:key='tab.id',
 				:name='tab.name',
 				:to='tab.to',
@@ -47,6 +46,7 @@ export default class MainLayout extends Vue {
 </script>
 <style lang="sass" scoped>
 .q-tab
+	margin: auto
 	@media (max-width: $breakpoint-xs-max)
 		padding: 0 .2rem
 	@media (max-width: $breakpoint-sm-max)
@@ -54,5 +54,5 @@ export default class MainLayout extends Vue {
 	@media (max-width: $breakpoint-md-max)
 		padding:0 .75rem
 	@media (min-width: $breakpoint-lg-min)
-		padding:0 1.5rem
+		padding:0 5vw
 </style>

@@ -1,17 +1,13 @@
 <template lang="pug">
 q-page(padding)
-  .row
-    .col-10
-      .text-h6 Settings
-    .col-2.text-center
-      q-btn(@click="saveSettings()" icon="save")
+  .text-center.text-h6 Settings
   .q-pa-md
     q-list
       q-item(tag="label" v-ripple)
         q-item-section
           q-item-label Dark Mode
         q-item-section(avatar)
-          q-toggle(v-model="settings.darkMode")
+          q-toggle(v-model="settings.darkMode" @input="saveSettings()")
 </template>
 
 <script lang="ts">

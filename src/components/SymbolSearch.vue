@@ -20,7 +20,6 @@ q-select(
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { SymbolModel } from '../models/models';
 import * as DreamDB from '../utils/dreams';
 import vSelect from 'vue-select';
 @Component({
@@ -44,7 +43,7 @@ export default class SymbolSearch extends Vue {
 		return this.DreamDictionary.filter((d) => d.label.toLocaleLowerCase().includes(this.search));
 	}
 	get paginated() {
-		return this.filtered.splice(0, this.limit * (this.nextPage-1));
+		return this.filtered; //.splice(0, this.limit * (this.nextPage-1));
 	}
 	selectSymbol(id: number) {
 		sessionStorage.setItem('CurrentDreamId', id.toString());
