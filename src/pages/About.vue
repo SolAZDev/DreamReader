@@ -32,9 +32,9 @@ export default class About extends Vue {
   RepoLink = "https://github.com/SolAZDev/DreamReader/tree/v2-dev"
   knownBugs = [
     {
-      icon:"bug_report", issue: "Search bar gives no results in some cases", statusType:"Temp Fix", statusText:"Currently Infinity Scroll is disabled, please be specific when searching."
+      icon:"bug_report", issue: "Search bar gives no results in some cases", statusType:"Temp Fix", statusText:"Currently Quasar's built in Infinity Scroll is being tested, you can see all 6500+ entries now "
     },
-    {icon:"report_problem", issue:"Tab sizing",statusType:"Work In Progress", statusText:"We're currently testing few possible fixes. Please feel free to report with your phone model."}
+    {icon:"report_problem", issue:"Tab sizing",statusType:"Work In Progress", statusText:"We're currently testing few possible fixes. Currently the active fix is auto-margin Please feel free to report with your phone model."}
   ]
 }
 </script>
