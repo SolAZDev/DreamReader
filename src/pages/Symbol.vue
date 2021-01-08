@@ -5,7 +5,7 @@ q-page(padding)
 		.row(style="padding: 10px")
 			.col-10
 				small Dream Symbol
-				h4 {{ Dream.symbol }}
+				.text-h4 {{ Dream.symbol }}
 			.col-2(v-if="Dream.id != -1", style="height: 100%")
 				.self-center.justify-center(style="display: flex", v-if="!isSaved")
 					q-btn(
@@ -36,7 +36,6 @@ q-page(padding)
 import { Vue, Component } from 'vue-property-decorator';
 import { SymbolModel } from '../models/models';
 import * as DreamDB from '../utils/dreams';
-import moment from 'moment';
 @Component
 export default class SymbolView extends Vue {
 	db = DreamDB;
@@ -94,6 +93,8 @@ export default class SymbolView extends Vue {
 		this.$store.dispatch('RemoveDream', opt);
 	}
 	SaveToHistory(id: number) {
+		// this.$store.dispatch('addToHistory', id);
+		// this.$root.$emit('reloadHistory');
 		let lsh = localStorage.getItem('history');
 		let newArray = [];
 		newArray.push(id);

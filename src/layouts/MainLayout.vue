@@ -1,13 +1,13 @@
 <template lang='pug'>
 q-layout(view='hHh lpR fFf')
 	q-header(elevated)
-		q-toolbar
-			SymbolSearch(style='width: 90vw; margin: auto')
+		SymbolSearch(style='width: vw; margin: auto')
+		//- q-toolbar
 
 	q-page-container
 		router-view 
 
-	q-footer.bg-gray-1.text-white(elevated)
+	q-footer.text-white(elevated)
 		q-tabs(align='center', v-model='tab')
 			q-route-tab.dText(
 				v-for='tab in links',
@@ -47,12 +47,12 @@ export default class MainLayout extends Vue {
 <style lang="sass" scoped>
 .q-tab
 	margin: auto
-	@media (max-width: $breakpoint-xs-max)
-		padding: 0 .2rem
-	@media (max-width: $breakpoint-sm-max)
-		padding: 0 .5rem
-	@media (max-width: $breakpoint-md-max)
-		padding:0 .75rem
-	@media (min-width: $breakpoint-lg-min)
-		padding:0 5vw
+	// @media (max-width: $breakpoint-xs-max)
+	// 	padding: 0 .2rem
+	// @media (max-width: $breakpoint-sm-max)
+	// 	padding: 0 .5rem
+	// @media (max-width: $breakpoint-md-max)
+	// 	padding:0 .75rem
+	// @media (min-width: $breakpoint-lg-min)
+	padding:0 5vw
 </style>

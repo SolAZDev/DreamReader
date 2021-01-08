@@ -5,7 +5,7 @@ q-select(
 	clerable,
 	label="Search Dreams"
 	label-color="white",
-	color="white"
+	input-class="text-white"
 	v-model="selected",
 	:options="paginated",
 	@filter="filterFn",
@@ -81,6 +81,7 @@ export default class SymbolSearch extends Vue {
   color: white
 
 .searchMenu
-  max-height: 50% !important
+  min-height: 10vh !important
+  max-height: 50vh !important
 
 </style>
