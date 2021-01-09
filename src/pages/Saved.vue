@@ -33,16 +33,16 @@ q-page(padding)
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import { SymbolModel, SavedDreamList, LiveDreamList } from "../models/models";
-import * as DreamDB from "../utils/dreams";
-import moment from "moment";
+import { Vue, Component } from 'vue-property-decorator';
+import { SymbolModel, SavedDreamList, LiveDreamList } from '../models/models';
+import * as DreamDB from '../utils/dreams';
+import moment from 'moment';
 @Component
 export default class Saved extends Vue {
 	// SavedDreams = new Array<LiveDreamList>();
 	Moment = moment; 
 	mounted() {
-		this.$store.dispatch("ReloadSavedData");
+		this.$store.dispatch('ReloadSavedData');
 	}
 
 	get SavedDreams(): LiveDreamList[] {
@@ -64,19 +64,19 @@ export default class Saved extends Vue {
 
 	goToDream(id: number) {
 		console.log(id);
-		sessionStorage.setItem("CurrentDreamId", id.toString());
-		this.$root.$emit("setCurrDreamId", id);
-		this.$router.push("/Symbol");
+		sessionStorage.setItem('CurrentDreamId', id.toString());
+		this.$root.$emit('setCurrDreamId', id);
+		this.$router.push('/Symbol');
 	}
 
 	openNote(date:string){
-		this.$store.dispatch("SetActiveDate",date);
+		this.$store.dispatch('SetActiveDate',date);
 		this.$router.push('/Note');
 	}
 
 	RemoveDream(date: string, id: number) {
-		console.log("Removing " + id + " from " + date);
-		this.$store.dispatch("RemoveDream", { date, id });
+		console.log('Removing ' + id + ' from ' + date);
+		this.$store.dispatch('RemoveDream', { date, id });
 	}
 }
 </script>

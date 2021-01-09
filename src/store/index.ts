@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable prefer-const */
 import * as DreamDB from './../utils/dreams';
-import { SymbolModel } from './../models/models';
 import { store } from 'quasar/wrappers';
-import { SavedDreamList, Settings } from 'src/models/models';
+import { SymbolModel, SavedDreamList, Settings } from 'src/models/models';
 import Vuex from 'vuex';
 import moment from 'moment';
 import localforage from 'localforage';
@@ -185,17 +184,15 @@ export default store(function ({ Vue }) {
         });
       },
       LoadSettings(state) {
+        console.log('Loading settings');
         state.local.getItem('settings').then((settJson) => {
-          if (settJson == null) {
-            return;
-          }
-          const sett = JSON.parse(settJson as string) as Settings;
-          state.Settings = sett;
+          console.log(settJson);
+          state.Settings = settJson as Settings;
         });
       },
       SaveSettings(state, opts: Settings) {
         state.Settings = opts;
-        state.local.setItem('settings', JSON.stringify(opts));
+        state.local.setItem('settings', opts);
       },
       //#endregion
     },
@@ -218,7 +215,7 @@ export default store(function ({ Vue }) {
       SetActiveDate(context, date: string) {
         context.commit('setActiveDate', date);
       },
-      LoadSettigs(context) {
+      LoadSettings(context) {
         context.commit('LoadSettings');
       },
       SaveSettings(context, opts: Settings) {

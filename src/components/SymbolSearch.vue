@@ -38,7 +38,7 @@ export default class SymbolSearch extends Vue {
 	}
 
 	get filtered() {
-		return this.DreamDictionary.filter((d) => d.label.toLocaleLowerCase().startsWith(this.search));
+		return this.DreamDictionary.filter((d) => d.label.toLocaleLowerCase().startsWith(this.search.trim()));
 	}
 	get paginated() {
 		return this.filtered; //.splice(0, this.limit * (this.nextPage-1));

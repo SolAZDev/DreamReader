@@ -1,6 +1,6 @@
 <template lang="pug">
 q-page(padding)
-  .text-h3.text-center Privacy Police
+  .text-h3.text-center Privacy Policy
   .q-ma-md
     q-list
       q-item

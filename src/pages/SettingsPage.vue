@@ -16,9 +16,13 @@ import {Settings} from '../models/models'
 @Component
 export default class SettingsPage extends Vue {
   settings= {darkMode: false} as Settings;
+  mounted() {
+   this.settings=this.$store.getters.getSettings; 
+  }
   saveSettings(){
     this.$store.dispatch('SaveSettings', this.settings)
-    this.$root.$emit('ReloadSettings')
+    // this.$root.$emit('ReloadSettings')
   }
+  
 }
 </script>
