@@ -40,7 +40,7 @@ import moment from "moment";
 @Component
 export default class Saved extends Vue {
 	// SavedDreams = new Array<LiveDreamList>();
-	Moment = moment;
+	Moment = moment; 
 	mounted() {
 		this.$store.dispatch("ReloadSavedData");
 	}

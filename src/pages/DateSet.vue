@@ -2,12 +2,13 @@
 q-page(padding)
   .row.justify-center
     .col-12(style="padding-bottom:10px")
-      .text-center Set Active date
-      div.text-center Set the date
+      .text-center.text-h5 Set Active date
+      .text-center.text-subtitle {{literalDate}}
     .col-12.text-center.m-auto
       q-date(
         v-model="date", 
         today-btn,
+        minimal
         :title="literalDate", 
         :events="DatesWithDreams"
         mask="MM/DD/YYYY"

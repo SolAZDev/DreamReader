@@ -16,6 +16,7 @@ export default store(function ({ Vue }) {
       ActiveDate: moment().format('MM/DD/YYYY'),
       SavedDreams: new Array<SavedDreamList>(),
       Settings: { darkMode: false } as Settings,
+      SavedDates: new Array<string>(),
       local: localforage.createInstance({
         name: 'DreamReader',
         driver: localforage.INDEXEDDB,
@@ -23,15 +24,9 @@ export default store(function ({ Vue }) {
       // history: new Array<number>(),
     },
     getters: {
-      getLocalForage: (state) => {
-        return state.local;
-      },
-      getSavedDreamsList: (state) => {
-        return state.SavedDreams;
-      },
-      getActiveDate: (state) => {
-        return state.ActiveDate;
-      },
+      getLocalForage: (state) => state.local,
+      getSavedDreamsList: (state) => state.SavedDreams,
+      getActiveDate: (state) => state.ActiveDate,
       dreamIsSavedOnActiveDate: (state) => (id: number) => {
         if (state.SavedDreams.length == 0) {
           return false;
@@ -45,14 +40,13 @@ export default store(function ({ Vue }) {
         return activeDateList[0].dreams.includes(id);
       },
       getSavedDates: (state) => {
-        let saveDates = [] as string[];
-        state.local.getItem('SavedDates').then((data) => {
-          if (data == null) {
-            return saveDates;
-          }
-          saveDates = JSON.parse(data as string) as string[];
-        });
-        return saveDates;
+        return state.SavedDates;
+        // state.local.getItem('SavedDates').then((data) => {
+        //   if (data == null) {
+        //     return [];
+        //   }
+        //   return data;
+        // });
       },
       getSettings: (state) => {
         return state.Settings;
@@ -87,8 +81,8 @@ export default store(function ({ Vue }) {
         let tempArray = new Array<SavedDreamList>();
         state.local.getItem('SavedDates').then((savedDates) => {
           let dates = [];
-          //Import from localStorage to localForage
           if (savedDates == null) {
+            //Import from localStorage to localForage
             savedDates = localStorage.getItem('SavedDates');
             if (savedDates == null) {
               return;
@@ -97,6 +91,7 @@ export default store(function ({ Vue }) {
           } else {
             dates = savedDates as string[];
           }
+          state.SavedDates = dates;
           dates.forEach((date) => {
             let ds = {} as SavedDreamList;
             ds.date = date;
@@ -123,6 +118,8 @@ export default store(function ({ Vue }) {
           //LocalStorage for Browsers.
           state.local.setItem('D' + sd.date, sd.dreams);
         });
+        dates.sort((a: string, b: string) => moment(a).diff(b));
+        state.SavedDates = dates;
         state.local.setItem('SavedDates', dates);
       },
       //#endregion
