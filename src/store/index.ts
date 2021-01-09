@@ -118,7 +118,7 @@ export default store(function ({ Vue }) {
           //LocalStorage for Browsers.
           state.local.setItem('D' + sd.date, sd.dreams);
         });
-        dates.sort((a: string, b: string) => moment(a).diff(b));
+        dates.sort((a: string, b: string) => moment(a).diff(b)).reverse();
         state.SavedDates = dates;
         state.local.setItem('SavedDates', dates);
       },

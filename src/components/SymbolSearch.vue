@@ -21,9 +21,7 @@ q-select(
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import * as DreamDB from '../utils/dreams';
-import vSelect from 'vue-select';
 @Component({
-	components: { vSelect },
 })
 export default class SymbolSearch extends Vue {
 	DB=DreamDB;
@@ -40,7 +38,7 @@ export default class SymbolSearch extends Vue {
 	}
 
 	get filtered() {
-		return this.DreamDictionary.filter((d) => d.label.toLocaleLowerCase().includes(this.search));
+		return this.DreamDictionary.filter((d) => d.label.toLocaleLowerCase().startsWith(this.search));
 	}
 	get paginated() {
 		return this.filtered; //.splice(0, this.limit * (this.nextPage-1));
