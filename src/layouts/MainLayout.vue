@@ -47,12 +47,5 @@ export default class MainLayout extends Vue {
 <style lang="sass" scoped>
 .q-tab
 	margin: auto
-	// @media (max-width: $breakpoint-xs-max)
-	// 	padding: 0 .2rem
-	// @media (max-width: $breakpoint-sm-max)
-	// 	padding: 0 .5rem
-	// @media (max-width: $breakpoint-md-max)
-	// 	padding:0 .75rem
-	// @media (min-width: $breakpoint-lg-min)
 	padding:0 5vw
 </style>

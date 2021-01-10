@@ -8,7 +8,14 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
-    "deploy": "push-dir --dir=dist/pwa --branch=gh-pages --force"
+    "deploy": "push-dir --dir=dist/pwa --branch=gh-pages --force",
+    "dev":"quasar dev",
+    "dev:pwa":"quasar dev -m pwa",
+    "dev:electron":"quasar dev -m electron",
+    "build":"quasar build -m pwa",
+    "build:android":"quasar build -m cordova -T android",
+    "build:android:sign":"quasar build -m cordova -T android && ./apk-sign.sh",
+    "build:electron":"quasar build -m electron"
   },
   "dependencies": {
     "@capacitor/android": "^2.4.5",

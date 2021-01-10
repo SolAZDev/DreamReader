@@ -16,7 +16,8 @@ q-page(padding)
   br
 
   .text-h6.text-center Known Bugs
-  q-list(bordered)
+  .text-center(v-if="knownBugs.length==0") Seems we don't have known bugs at the time of this build. If you find one, please report it!
+  q-list(bordered v-if="knownBugs.length>0")
     q-expansion-item(v-for="bug in knownBugs" expand--separator :icon="bug.icon", :label="bug.issue")
       q-separator
       q-card
@@ -29,9 +30,9 @@ q-page(padding)
 import { Vue, Component } from 'vue-property-decorator';
 @Component({})
 export default class About extends Vue {
-  RepoLink = 'https://github.com/SolAZDev/DreamReader/tree/v2-dev'
+  RepoLink = 'https://github.com/SolAZDev/DreamReader/'
   knownBugs = [
-    {icon:'bug_report', issue: 'Dark Mode Toggle Error', statusType:'Under Investigation', statusText:'Dark Mode saves and works, but when reloaded, despite being activated, the toggle may seem deactivated.'},
+    // {icon:'bug_report', issue: 'Dark Mode Toggle Error', statusType:'Under Investigation', statusText:'Dark Mode saves and works, but when reloaded, despite being activated, the toggle may seem deactivated.'},
     // {icon:"bug_report", issue: "Search bar gives no results in some cases", statusType:"Temp Fix", statusText:"Currently Quasar's built in Infinity Scroll is being tested, you can see all 6500+ entries now "},
     // {icon:"report_problem", issue:"Tab sizing",statusType:"Work In Progress", statusText:"We're currently testing few possible fixes. Currently the active fix is auto-margin Please feel free to report with your phone model."}
   ]
