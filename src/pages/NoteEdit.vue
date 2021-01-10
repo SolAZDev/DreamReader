@@ -12,11 +12,11 @@ q-page(padding)
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component } from 'vue-property-decorator';
 import moment from 'moment'
 @Component({})
 export default class NoteEdit extends Vue {
-   content= null as any;
+   content= '';
    toolbar=[
         ['bold','italic', 'strike', 'underline',
           {
@@ -29,21 +29,19 @@ export default class NoteEdit extends Vue {
   mounted() {
     this.loadNote();
   }
-  loadNote(){
-    this.content = localStorage.getItem('N'+this.activeDate);
+  async loadNote(){
+    this.content = await this.$store.getters.getLocalForage.getItem('N'+this.activeDate);
   }
   get activeDate(){
     return this.$store.getters.getActiveDate;
   }
   get literalDate(){
-    return moment(this.activeDate).format("MMM Do, YYYY")
+    return moment(this.activeDate).format('MMM Do, YYYY')
   }
   saveNote(){
-    console.log("Saved");
-    
-    localStorage.setItem('N'+this.activeDate,this.content);
+    this.$store.getters.getLocalForage.setItem('N'+this.activeDate,this.content);
     this.$router.push('/Note');
-    this.$q.notify({message:"Note saved!"});
+    this.$q.notify({message:'Note saved!'});
 
   }
 }

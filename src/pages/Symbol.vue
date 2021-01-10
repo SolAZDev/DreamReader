@@ -92,10 +92,8 @@ export default class SymbolView extends Vue {
 		};
 		this.$store.dispatch('RemoveDream', opt);
 	}
-	SaveToHistory(id: number) {
-		// this.$store.dispatch('addToHistory', id);
-		// this.$root.$emit('reloadHistory');
-		let lsh = localStorage.getItem('history');
+	async SaveToHistory(id: number) {
+		let lsh = await this.$store.getters.getLocalForage.getItem('history');
 		let newArray = [];
 		newArray.push(id);
 		if (lsh != 'null') {
@@ -104,8 +102,7 @@ export default class SymbolView extends Vue {
 			saved.forEach((s) => newArray.push(s));
 		}
 		const fArray = [...new Set(newArray)];
-		
-		localStorage.setItem('history', JSON.stringify(fArray.slice(0,50)));
+		this.$store.getters.getLocalForage.setItem('history', JSON.stringify(fArray.slice(0,50)));
 	}
 }
 </script>

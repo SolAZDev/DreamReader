@@ -10,16 +10,16 @@ q-page(padding)
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
 })
 export default class PageIndex extends Vue {
 	 mainLinks = [
-		{icon:"calendar_today", to:"/Date", text:"Change Date"},
-		{icon:"settings", to:"/Settings", text:"Settings"},
-		{icon:"privacy_tip", to:"/Privacy", text:"Privacy"},
-		{icon:"info", to:"/About", text:"About"},
+		{icon:'calendar_today', to:'/Date', text:'Change Date'},
+		{icon:'settings', to:'/Settings', text:'Settings'},
+		{icon:'privacy_tip', to:'/Privacy', text:'Privacy'},
+		{icon:'info', to:'/About', text:'About'},
 	] 
 }
 </script>

@@ -40,38 +40,9 @@ export default store(function ({ Vue }) {
       },
       getSavedDates: (state) => {
         return state.SavedDates;
-        // state.local.getItem('SavedDates').then((data) => {
-        //   if (data == null) {
-        //     return [];
-        //   }
-        //   return data;
-        // });
       },
       getSettings: (state) => {
         return state.Settings;
-      },
-      getHistory: (state) => {
-        // state.local.getItem('history').then((hist) => {
-        //   if (hist != null) {
-        //     state.history = hist as number[];
-        //   }
-        // });
-        let history = new Array<SymbolModel>();
-        state.local.getItem('history').then((hist) => {
-          let dreamIds = [];
-          if (hist == null) {
-            hist = localStorage.getItem('history');
-            if (hist == null) {
-              return;
-            }
-            dreamIds = JSON.parse(hist as string) as number[];
-          }
-          dreamIds = hist as number[];
-          dreamIds.forEach((did) => {
-            history.push(DreamDB.getDream(did));
-          });
-        });
-        return history;
       },
     },
     mutations: {
@@ -186,6 +157,9 @@ export default store(function ({ Vue }) {
       LoadSettings(state) {
         console.log('Loading settings');
         state.local.getItem('settings').then((settJson) => {
+          if (settJson == null) {
+            return;
+          }
           console.log(settJson);
           state.Settings = settJson as Settings;
         });

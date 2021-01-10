@@ -26,9 +26,9 @@ export default class History extends Vue {
 	mounted() {
 		this.reloadHistory();	
 	}
-	reloadHistory() {
+	async reloadHistory() {
 		// this.dreams =this.$store.getters.getHistory;	
-		const lsh = localStorage.getItem('history');
+		const lsh = await this.$store.getters.getLocalForage.getItem('history');
 		if(lsh==null){return;}
 		const dreamIds = JSON.parse(lsh) as number[];
 		dreamIds.forEach(did => { //Did you though?
