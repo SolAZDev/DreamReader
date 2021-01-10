@@ -17,8 +17,8 @@ q-select(
 		q-item
 			q-item-section No Results
 </template>
-
 <script lang="ts">
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Vue, Component } from 'vue-property-decorator';
 import * as DreamDB from '../utils/dreams';
 @Component({
@@ -46,11 +46,11 @@ export default class SymbolSearch extends Vue {
 	selectSymbol(id: number) {
 		sessionStorage.setItem('CurrentDreamId', id.toString());
 		this.$root.$emit('setCurrDreamId', id);
-		if(this.$route.path!="/Symbol"){
+		if(this.$route.path!='/Symbol'){
 			 this.$router.push('/Symbol');
 		}
 	}
-	filterFn(val:string, update:any, abort:any){
+	filterFn(val:string, update:any){
 		setTimeout(()=>{
 			update(()=>{
 				this.nextPage=2;

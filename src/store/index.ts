@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable prefer-const */
-import * as DreamDB from './../utils/dreams';
 import { store } from 'quasar/wrappers';
-import { SymbolModel, SavedDreamList, Settings } from 'src/models/models';
+import { SavedDreamList, Settings } from 'src/models/models';
 import Vuex from 'vuex';
 import moment from 'moment';
 import localforage from 'localforage';
