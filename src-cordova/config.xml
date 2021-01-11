@@ -16,6 +16,7 @@
     <platform name="android">
         <allow-intent href="market:*" />
         <preference name="android-minSdkVersion" value="22" />
+        <preference name="AndroidPersistentFileLocation" value="Internal" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

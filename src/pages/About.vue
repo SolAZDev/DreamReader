@@ -32,9 +32,8 @@ import { Vue, Component } from 'vue-property-decorator';
 export default class About extends Vue {
   RepoLink = 'https://github.com/SolAZDev/DreamReader/'
   knownBugs = [
-    // {icon:'bug_report', issue: 'Dark Mode Toggle Error', statusType:'Under Investigation', statusText:'Dark Mode saves and works, but when reloaded, despite being activated, the toggle may seem deactivated.'},
-    // {icon:"bug_report", issue: "Search bar gives no results in some cases", statusType:"Temp Fix", statusText:"Currently Quasar's built in Infinity Scroll is being tested, you can see all 6500+ entries now "},
-    // {icon:"report_problem", issue:"Tab sizing",statusType:"Work In Progress", statusText:"We're currently testing few possible fixes. Currently the active fix is auto-margin Please feel free to report with your phone model."}
+    {icon:'report_problem', issue:'App Update Refresh',statusType:'Under Investigation', statusText:"When an update is released, the PWA Version may not load properly (blank page) in this case we recommend deleting the page's cache, but NOT it's data."},
+    {icon:"bug_report", issue: "Import/Export Android", statusType:"Under Investigation", statusText:"Android Users can't Import nor Export their Backups from the app, this is due to permission limitations"},
   ]
 }
 </script>

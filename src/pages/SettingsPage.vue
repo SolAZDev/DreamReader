@@ -34,7 +34,8 @@ q-page(padding)
         )
           template(v-slot:append)
             q-icon(name="attach_file")
-      q-card-actions
+            
+      q-card-actions(align="around")
         q-btn(:disabled="file==null" @click="readInputJson()") Import Backup
         q-btn(flat v-close-popup) Cancel
  
@@ -49,7 +50,7 @@ q-page(padding)
           q-item-section(avatar)
             q-toggle(v-model="base64")
       
-      q-card-actions.m-center.text-center
+      q-card-actions(align="around")
         q-btn(flat @click="downloadOutputJson()") Save Backup
         q-btn(flat v-close-popup) Cancel
 
@@ -60,6 +61,7 @@ q-page(padding)
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import {Settings} from '../models/models'
 import moment from 'moment'
+import { exportFile } from 'quasar'
 // import localForage from 'localforage'
 @Component
 export default class SettingsPage extends Vue {
@@ -95,15 +97,13 @@ export default class SettingsPage extends Vue {
 
   async downloadOutputJson(){
     const json = await this.outputJson(this.base64);
-    const blob = new Blob([json], {type:this.base64?'text/plain':'application/json;charset=utf-8'});
-    const url = URL.createObjectURL(blob)
-    //Ye old hack
-    var a = document.createElement('a');
-    a.href=url;
-    a.download='DreamReader-'+moment().format('MM-DD-YYYY-HH-MM')+(this.base64?'.drb':'.drb.json');
-    a.click();
-    a.remove();
+    if(this.$q.platform.is.android){
+      window.saveAs()
+    }
+    const status = exportFile('DreamReader-'+moment().format('MM-DD-YYYY-HH-MM')+(this.base64?'.drb':'.drb.json'), json, this.base64?'text/plain':'application/json;charset=utf-8')
+    console.log(status);
   }
+
 
   async inputJson(input:string, base64=false){
     const json = JSON.parse(base64?atob(input):input);
