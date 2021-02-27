@@ -1,0 +1,7 @@
+{
+  "appId": "com.SolAZDev.DreamReader",
+  "appName": "DreamReader",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "www"
+}

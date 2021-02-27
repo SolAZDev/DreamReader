@@ -9,13 +9,15 @@
     "lint": "eslint --ext .js,.ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
     "deploy": "push-dir --dir=dist/pwa --branch=gh-pages --force",
-    "dev":"quasar dev",
-    "dev:pwa":"quasar dev -m pwa",
-    "dev:electron":"quasar dev -m electron",
-    "build":"quasar build -m pwa",
-    "build:android":"quasar build -m cordova -T android",
-    "build:android:sign":"quasar build -m cordova -T android && ./apk-sign.sh",
-    "build:electron":"quasar build -m electron"
+    "dev": "quasar dev",
+    "dev:pwa": "quasar dev -m pwa",
+    "dev:electron": "quasar dev -m electron",
+    "build": "quasar build -m pwa",
+    "build:cordand": "quasar build -m cordova -T android",
+    "build:cordand:sign": "quasar build -m capacitor -T android && ./apk-sign.sh",
+    "build:capand": "quasar build -m cordova -T android",
+    "build:capand:sign": "quasar build -m capacitor -T android && ./apk-sign.sh",
+    "build:electron": "quasar build -m electron"
   },
   "dependencies": {
     "@capacitor/android": "^2.4.5",
