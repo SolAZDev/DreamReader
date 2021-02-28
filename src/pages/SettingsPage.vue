@@ -76,9 +76,10 @@ q-page(padding)
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Vue, Component, Watch } from 'vue-property-decorator';
-import { Settings } from '../models/models';
+import { SavedDreamList, Settings } from '../models/models';
 import moment from 'moment';
 import { exportFile, copyToClipboard, Platform } from 'quasar';
+import Saved from './Saved.vue';
 @Component
 export default class SettingsPage extends Vue {
   settings = { darkMode: false } as Settings;
@@ -155,9 +156,9 @@ export default class SettingsPage extends Vue {
     });
   }
 
-  async inputJson(input: string, base64 = false) {
-    const json = JSON.parse(base64 ? atob(input) : input);
-    console.log('Whole JSON :: ' + json);
+  async inputJson(input: string) {
+    const json = JSON.parse(this.base64 ? atob(input) : input);
+    console.log('Whole JSON :: ' + JSON.stringify(json));
     await Object.keys(json).forEach(async (key) => {
       console.log('Parsing ' + key);
       const stored = await this.localForage.getItem(key);
@@ -174,7 +175,7 @@ export default class SettingsPage extends Vue {
         const fsDates = fDates
           .sort((a: string, b: string) => moment(a).diff(b))
           .reverse();
-        console.log('Finalized Dates [' + fsDates + ']');
+        console.log(key + ' = Finalized Dates [' + fsDates + ']');
         await this.localForage.setItem(key, fsDates);
       }
       //Dreams
@@ -208,13 +209,48 @@ export default class SettingsPage extends Vue {
     this.$store.dispatch('ReloadSavedData');
   }
 
+  parseImportJson(input: string): SavedDreamList[] {
+    let result = new Array<SavedDreamList>();
+    const data = JSON.parse(this.base64 ? atob(input) : input) as any;
+    console.log('Parsing JSON :: ' + JSON.stringify(data));
+    (data[
+      Object.keys(data).filter((key) => key == 'SavedDates')[0]
+    ] as string[]).forEach((date) => {
+      let dateData = { date: date } as SavedDreamList;
+      dateData.dreams = data[
+        Object.keys(data).filter((key) => key == 'D' + date)[0]
+      ] as number[];
+      dateData.note = data[
+        Object.keys(data).filter((key) => key == 'N' + date)[0]
+      ] as string;
+      result.push(dateData);
+    });
+    return result;
+  }
+
+  async importSaveData(input: string) {
+    const activeDate = this.$store.getters.getActiveDate;
+    const parsedData = this.parseImportJson(input);
+    await parsedData.forEach(async (date) => {
+      console.log(JSON.stringify(date) + '--' + activeDate);
+      await this.$store.dispatch('SetActiveDate', date.date);
+      if (date.note != '' || date.note != null) {
+        await this.$store.dispatch('SaveNote', date.note);
+      }
+      date.dreams.forEach(async (dream) => {
+        const dDate = date.date;
+        await this.$store.dispatch('SaveDream', { id: dream, date: dDate });
+      });
+    });
+    this.$store.dispatch('SetActiveDate', activeDate);
+  }
+
   async readInputJson() {
     this.importing = true;
-    await this.inputJson(
+    await this.importSaveData(
       this.useText
         ? this.rawText
-        : await ((this.file as unknown) as File).text(),
-      this.base64
+        : await ((this.file as unknown) as File).text()
     );
     this.importing = false;
     this.file = null;

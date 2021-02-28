@@ -1,8 +1,9 @@
 #!/bin/bash
 framework=cordova
 androidSDKVerTools=30.0.3
-signingKeys=~/my-release-key.keystore
+signingKeys=~/Nextcloud/Tools/Android.my-release-key.keystore
 aliasName=alias_name
+ANDROID_SDK_ROOT=~/Android/Sdk
 outputDir=dist/$framework
 inputFile=dist/$framework/android/apk/release/app-release-unsigned.apk
 name=DreamReader

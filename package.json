@@ -14,8 +14,8 @@
     "dev:electron": "quasar dev -m electron",
     "build": "quasar build -m pwa",
     "build:cordand": "quasar build -m cordova -T android",
-    "build:cordand:sign": "quasar build -m capacitor -T android && ./apk-sign.sh",
-    "build:capand": "quasar build -m cordova -T android",
+    "build:cordand:sign": "quasar build -m cordova -T android && ./apk-sign.sh",
+    "build:capand": "quasar build -m capacitor -T android",
     "build:capand:sign": "quasar build -m capacitor -T android && ./apk-sign.sh",
     "build:electron": "quasar build -m electron"
   },
@@ -39,6 +39,7 @@
     "vue-bus": "^1.2.1",
     "vue-class-component": "^7.2.2",
     "vue-i18n": "^8.0.0",
+    "vue-localforage": "^0.2.5",
     "vue-property-decorator": "^8.3.0",
     "vue-select": "^3.11.2"
   },

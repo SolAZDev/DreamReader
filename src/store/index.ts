@@ -5,6 +5,7 @@ import { SavedDreamList, Settings } from 'src/models/models';
 import Vuex from 'vuex';
 import moment from 'moment';
 import localforage from 'localforage';
+import { debug } from 'console';
 
 export default store(function ({ Vue }) {
   Vue.use(Vuex);
@@ -25,6 +26,8 @@ export default store(function ({ Vue }) {
       getLocalForage: (state) => state.local,
       getSavedDreamsList: (state) => state.SavedDreams,
       getActiveDate: (state) => state.ActiveDate,
+      getSavedDates: (state) => state.SavedDates,
+      getSettings: (state) => state.Settings,
       dreamIsSavedOnActiveDate: (state) => (id: number) => {
         if (state.SavedDreams.length == 0) {
           return false;
@@ -37,14 +40,18 @@ export default store(function ({ Vue }) {
         }
         return activeDateList[0].dreams.includes(id);
       },
-      getSavedDates: (state) => {
-        return state.SavedDates;
-      },
-      getSettings: (state) => {
-        return state.Settings;
+      getSavedNote: (state) => async (date: string) => {
+        return await state.local.getItem('N' + date);
       },
     },
     mutations: {
+      createDB(state) {
+        console.log('initiating db');
+        state.local = localforage.createInstance({
+          name: 'DreamReader',
+          driver: localforage.INDEXEDDB,
+        });
+      },
       //#region Save Data Management
       loadDatesAndDreams(state) {
         let tempArray = new Array<SavedDreamList>();
@@ -80,39 +87,40 @@ export default store(function ({ Vue }) {
         });
         state.SavedDreams = tempArray;
       },
-      saveDatesAndDreams(state) {
+      async saveDatesAndDreams(state) {
         let dates = new Array<string>();
-        state.SavedDreams.forEach((sd) => {
+        await state.SavedDreams.forEach(async (sd) => {
           dates.push(sd.date);
           //LocalStorage for Browsers.
-          state.local.setItem('D' + sd.date, sd.dreams);
+          await state.local.setItem('D' + sd.date, sd.dreams);
         });
         dates.sort((a: string, b: string) => moment(a).diff(b)).reverse();
         state.SavedDates = dates;
-        state.local.setItem('SavedDates', dates);
+        await state.local.setItem('SavedDates', dates);
       },
       //#endregion
       //#region Saved Dreams Management
-      addDreamOnDate(state, id: number) {
-        const dream = state.SavedDreams.filter(
-          (sd) => sd.date === state.ActiveDate
-        );
+      addDreamOnDate(state, opts: { id: number; date: string }) {
+        const compareDate = opts.date != '' ? opts.date : state.ActiveDate;
+        // debugger;
+        const dream = state.SavedDreams.filter((sd) => sd.date == compareDate);
+        console.log(dream);
         if (dream.length > 0) {
           //Found!
-          if (dream[0].dreams.includes(id)) {
+          if (dream[0].dreams.includes(opts.id)) {
             return;
           } //Dupe Avoidance
-          dream[0].dreams.unshift(id);
+          dream[0].dreams.unshift(opts.id);
         } else {
           //The date doesn't exist
           let tmp = {} as SavedDreamList;
           tmp.date = state.ActiveDate;
           tmp.dreams = new Array<number>();
-          tmp.dreams.push(id);
+          tmp.dreams.push(opts.id);
           state.SavedDreams.unshift(tmp);
         }
       },
-      removeDreamOnDate(state, opts: { date: string; id: number }) {
+      async removeDreamOnDate(state, opts: { date: string; id: number }) {
         const dreams = state.SavedDreams.filter((sd) => sd.date == opts.date);
         if (dreams.length < 0) {
           return;
@@ -121,7 +129,7 @@ export default store(function ({ Vue }) {
         if (dreams[0].dreams.length == 0) {
           //Empty Dream List
           //TODO: Add Note Checking.
-          state.local.removeItem('D' + opts.date);
+          await state.local.removeItem('D' + opts.date);
           state.SavedDreams.splice(state.SavedDreams.indexOf(dreams[0], 1));
         }
       },
@@ -130,14 +138,21 @@ export default store(function ({ Vue }) {
       setActiveDate(state, date: string) {
         state.ActiveDate = date;
       },
-      addToHistory(state, id: number) {
+      async setNoteOnDate(state, note: string) {
+        if (note == null || note == '' || note == ' ') {
+          await state.local.removeItem('N' + state.ActiveDate);
+        } else {
+          await state.local.setItem('N' + state.ActiveDate, note);
+        }
+      },
+      async addToHistory(state, id: number) {
         console.log('adding ' + id);
         let fArray = [] as number[];
         let newArray = new Array<number>();
-        state.local.getItem('history').then((lsh) => {
+        await state.local.getItem('history').then(async (lsh) => {
           if (lsh == null) {
             const ls = localStorage.getItem('history');
-            if (ls != null || undefined || 'underfined') {
+            if (ls != null || undefined || 'undefined') {
               lsh = JSON.parse(ls as string) as number[];
             }
           }
@@ -150,12 +165,12 @@ export default store(function ({ Vue }) {
           fArray = [...new Set(newArray)];
           const final = fArray.slice(0, 50);
           // state.history = final;
-          state.local.setItem('history', final);
+          await state.local.setItem('history', final);
         });
       },
-      LoadSettings(state) {
+      async LoadSettings(state) {
         console.log('Loading settings');
-        state.local.getItem('settings').then((settJson) => {
+        await state.local.getItem('settings').then((settJson) => {
           if (settJson == null) {
             return;
           }
@@ -163,27 +178,33 @@ export default store(function ({ Vue }) {
           state.Settings = settJson as Settings;
         });
       },
-      SaveSettings(state, opts: Settings) {
+      async SaveSettings(state, opts: Settings) {
         state.Settings = opts;
-        state.local.setItem('settings', opts);
+        await state.local.setItem('settings', opts);
       },
       //#endregion
     },
 
     actions: {
+      initDB(context) {
+        context.commit('createDB');
+      },
       ReloadSavedData(context) {
         context.commit('loadDatesAndDreams');
       },
       SaveData(context) {
         context.commit('saveDatesAndDreams');
       },
-      SaveDream(context, id: number) {
-        context.commit('addDreamOnDate', id);
+      SaveDream(context, opts: { id: number; date: string }) {
+        context.commit('addDreamOnDate', opts);
         this.dispatch('SaveData');
       },
       RemoveDream(context, opts: { date: string; id: number }) {
         context.commit('removeDreamOnDate', opts);
         this.dispatch('SaveData');
+      },
+      SaveNote(context, note: string) {
+        context.commit('setNoteOnDate', note);
       },
       SetActiveDate(context, date: string) {
         context.commit('setActiveDate', date);
