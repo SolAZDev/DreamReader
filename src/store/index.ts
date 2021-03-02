@@ -106,7 +106,7 @@ export default store(function ({ Vue }) {
         const dream = state.SavedDreams.filter((sd) => sd.date == compareDate);
         console.log(dream);
         if (dream.length > 0) {
-          //Found!
+          //Found!i
           if (dream[0].dreams.includes(opts.id)) {
             return;
           } //Dupe Avoidance
@@ -114,7 +114,7 @@ export default store(function ({ Vue }) {
         } else {
           //The date doesn't exist
           let tmp = {} as SavedDreamList;
-          tmp.date = state.ActiveDate;
+          tmp.date = compareDate;
           tmp.dreams = new Array<number>();
           tmp.dreams.push(opts.id);
           state.SavedDreams.unshift(tmp);
