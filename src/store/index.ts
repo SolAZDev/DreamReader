@@ -5,7 +5,6 @@ import { SavedDreamList, Settings } from 'src/models/models';
 import Vuex from 'vuex';
 import moment from 'moment';
 import localforage from 'localforage';
-import { debug } from 'console';
 
 export default store(function ({ Vue }) {
   Vue.use(Vuex);
@@ -102,15 +101,16 @@ export default store(function ({ Vue }) {
       //#region Saved Dreams Management
       addDreamOnDate(state, opts: { id: number; date: string }) {
         const compareDate = opts.date != '' ? opts.date : state.ActiveDate;
-        // debugger;
-        const dream = state.SavedDreams.filter((sd) => sd.date == compareDate);
-        console.log(dream);
-        if (dream.length > 0) {
-          //Found!i
-          if (dream[0].dreams.includes(opts.id)) {
+        const dreamDate = state.SavedDreams.filter(
+          (sd) => sd.date == compareDate
+        );
+        console.log(dreamDate);
+        if (dreamDate.length > 0) {
+          //Found!
+          if (dreamDate[0].dreams.includes(opts.id)) {
             return;
           } //Dupe Avoidance
-          dream[0].dreams.unshift(opts.id);
+          dreamDate[0].dreams.unshift(opts.id);
         } else {
           //The date doesn't exist
           let tmp = {} as SavedDreamList;

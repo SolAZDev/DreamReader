@@ -15,22 +15,25 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import moment from 'moment'
+import moment from 'moment';
 @Component({})
 export default class NoteView extends Vue {
-  content= '';
+  content = '';
   mounted() {
     this.loadNote();
   }
-  async loadNote(){
-    this.content = await this.$store.getters.getLocalForage.getItem('N'+this.activeDate);
+  async loadNote() {
+    this.content = await this.$store.getters.getLocalForage.getItem(
+      'N' + this.activeDate
+    );
   }
-  get activeDate(){
+  get activeDate() {
     return this.$store.getters.getActiveDate;
   }
-  get literalDate(){
-    return moment(this.activeDate).format('MMM Do, YYYY')
+  get literalDate() {
+    return moment(this.activeDate).format('MMM Do, YYYY');
   }
+  //TODO - Grep the note for dream symbols, and turn them into links to the dream.
 }
 </script>
 <style lang="sass" scoped>

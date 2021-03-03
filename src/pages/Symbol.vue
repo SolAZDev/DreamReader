@@ -82,8 +82,12 @@ export default class SymbolView extends Vue {
         ' to ' +
         this.$store.getters.getActiveDate
     );
-
     this.$store.dispatch('SaveDream', { id: this.Dream.id });
+    // this.$q.notify(
+    //   this.Dream.symbol +
+    //     ' was added to your dream on ' +
+    //     this.$store.getters.getActiveDate
+    // );
   }
   RemoveDream() {
     const opt = {

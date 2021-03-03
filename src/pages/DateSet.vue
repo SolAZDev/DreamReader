@@ -22,35 +22,47 @@ q-page(padding)
 import { Vue, Component } from 'vue-property-decorator';
 import moment from 'moment';
 
-@Component({
-})
+@Component({})
 export default class DateSet extends Vue {
   date = this.activeDate;
 
-  get literalDate(){
-    return moment(this.date).format('MMM Do, YYYY')
+  get literalDate() {
+    return moment(this.date).format('MMM Do, YYYY');
   }
-  
-  get DatesWithDreams(){
-    return (this.$store.getters.getSavedDates as string[]).map(date=>{return moment(date).format('YYYY/MM/DD')});
+
+  get DatesWithDreams() {
+    return (this.$store.getters.getSavedDates as string[]).map((date) => {
+      return moment(date).format('YYYY/MM/DD');
+    });
   }
-  get activeDate(){
+  get activeDate() {
     return this.$store.getters.getActiveDate;
   }
 
-  get screenSize(){
-    if(this.$q.screen.xs){return 'xs';}
-    if(this.$q.screen.sm){return 'sm';}
-    if(this.$q.screen.md){return 'md';}
-    if(this.$q.screen.lg){return 'lg';}
-    if(this.$q.screen.xl){return 'xl';}
-
+  get screenSize() {
+    if (this.$q.screen.xs) {
+      return 'xs';
+    }
+    if (this.$q.screen.sm) {
+      return 'sm';
+    }
+    if (this.$q.screen.md) {
+      return 'md';
+    }
+    if (this.$q.screen.lg) {
+      return 'lg';
+    }
+    if (this.$q.screen.xl) {
+      return 'xl';
+    }
   }
 
-  pickDate(date:string){
-    if(date==null){return;}
-    this.$store.dispatch('SetActiveDate',date)
-
+  pickDate(date: string) {
+    if (date == null) {
+      return;
+    }
+    this.$store.dispatch('SetActiveDate', date);
+    this.$q.notify(date + ' is now the Active Date');
   }
-} 
+}
 </script>
