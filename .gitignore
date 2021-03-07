@@ -31,4 +31,5 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
-apk-sign.sh
+./apk-sign.sh
+./yarn.lock
