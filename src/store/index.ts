@@ -28,9 +28,6 @@ export default store(function ({ Vue }) {
       getSavedDates: (state) => state.SavedDates,
       getSettings: (state) => state.Settings,
       dreamIsSavedOnActiveDate: (state) => (id: number) => {
-        if (state.SavedDreams.length == 0) {
-          return false;
-        }
         const activeDateList = state.SavedDreams.filter(
           (sd) => sd.date === state.ActiveDate
         );
@@ -100,7 +97,9 @@ export default store(function ({ Vue }) {
       //#endregion
       //#region Saved Dreams Management
       addDreamOnDate(state, opts: { id: number; date: string }) {
-        const compareDate = opts.date != '' ? opts.date : state.ActiveDate;
+        const compareDate =
+          opts.date != undefined ? opts.date : state.ActiveDate;
+        console.log('Saving to ' + compareDate);
         const dreamDate = state.SavedDreams.filter(
           (sd) => sd.date == compareDate
         );
