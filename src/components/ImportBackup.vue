@@ -24,9 +24,8 @@ q-card(style="width:75vw")
           accept=".drb, .drb.json"
       )
       q-input(outlined, v-if="!useText && $q.platform.is.capacitor"
-          v-model="file"
-          label="Select Backup File Mobile",
-          accept=".drb, .drb.json",
+          v-model="mobileFileLabel"
+          label="Select Backup File Mobile",  
           @click="OpenCapFileSelector()"
       )
           template(v-slot:append)
@@ -41,16 +40,17 @@ q-card(style="width:75vw")
 import { Vue, Component } from 'vue-property-decorator';
 import { SavedDreamList } from '../models/models';
 import validator from 'validator';
-import Plugins from '@capacitor/core';
-const { FileSelector } = Plugins;
+import Plugins, {
+  Filesystem,
+  FilesystemDirectory,
+  FilesystemEncoding,
+} from '@capacitor/core';
 @Component
 export default class ImportBackup extends Vue {
   useText = false;
   rawText = '';
   file = null;
-  base64regex = new RegExp(
-    '/^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/'
-  );
+  mobileFileLabel = '';
 
   parseJsonDreams(input: string): SavedDreamList[] {
     let result = new Array<SavedDreamList>();
@@ -80,10 +80,9 @@ export default class ImportBackup extends Vue {
 
   FileValidator(input: string) {
     let data = undefined as any;
-    if (validator.isBase64(input)) {
-      if (validator.isJSON(atob(input))) {
-        data = JSON.parse(atob(input));
-      }
+    console.log(input);
+    if (validator.isJSON(atob(input))) {
+      data = JSON.parse(atob(input));
     } else if (validator.isJSON(input)) {
       data = JSON.parse(input);
     } else {
@@ -120,11 +119,19 @@ export default class ImportBackup extends Vue {
   async readInputJson() {
     this.$q.loading.isActive = true;
     this.$q.loadingBar.start();
-    await this.importSaveData(
-      this.useText
-        ? this.rawText
-        : await ((this.file as unknown) as File).text()
-    );
+    let strData = '';
+    if (this.useText) {
+      strData = this.rawText;
+    } else {
+      if (this.$q.platform.is.capacitor) {
+        strData = (this.file as any).dataURI.split('base64,')[1];
+      } else {
+        //Assuming it's desktop/web
+        strData = await ((this.file as unknown) as File).text();
+      }
+    }
+    console.log(strData);
+    await this.importSaveData(strData);
     this.$q.loading.isActive = false;
     this.$q.loadingBar.stop();
     this.file = null;
@@ -132,6 +139,10 @@ export default class ImportBackup extends Vue {
   }
 
   async OpenCapFileSelector() {
+    const file = await (window as any).chooser.getFile();
+    this.file = file;
+    this.mobileFileLabel = file.name;
+    console.log(file);
     // let selectedFile = await FileSelector.fileSelector({
     //   multiple_selection: false,
     //   ext: ['.drb', '.drb.json'],

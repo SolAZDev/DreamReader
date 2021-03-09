@@ -67,6 +67,9 @@ export default class ExportBackup extends Vue {
       : 'application/json;charset=utf-8';
     if (this.$q.platform.is.capacitor) {
     }
+    if (this.$q.platform.is.cordova) {
+      await this.cordAndExport(fileName, data, mimeType);
+    }
     if (this.$q.platform.is.desktop || this.$q.platform.is.electron) {
       const status = exportFile(fileName, data, mimeType);
       console.log(status);
@@ -79,6 +82,11 @@ export default class ExportBackup extends Vue {
       this.$q.notify('Copied!');
       console.log('Copied');
     });
+  }
+
+  async cordAndExport(fileName: string, data: string, mimetype: string) {
+    const file = await (window as any).chooser.getFile('.drb, .drb.json');
+    console.log(file);
   }
 }
 </script>

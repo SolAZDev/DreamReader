@@ -7,6 +7,7 @@
   "dependencies": {
     "@capacitor/cli": "^2.0.0",
     "@capacitor/core": "^2.0.0",
-    "capacitor-file-selector": "^0.0.5"
+    "capacitor-file-selector": "^0.0.5",
+    "cordova-plugin-chooser": "^1.3.2"
   }
 }
