@@ -1,5 +1,5 @@
 #!/bin/bash
-framework=cordova
+framework=capacitor
 androidSDKVerTools=30.0.3
 signingKeys=~/Nextcloud/Tools/Android.my-release-key.keystore
 aliasName=alias_name

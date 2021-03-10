@@ -18,15 +18,10 @@ q-card(style="width:75vw")
           q-item-label Backup Data
           q-input(v-model="rawText" filled  type="textarea")
       
-      q-file(outlined, v-if="!useText && !$q.platform.is.capacitor"
+      q-file(outlined, v-if="!useText"
           v-model="file"
-          label="Select Backup File Web",
-          accept=".drb, .drb.json"
-      )
-      q-input(outlined, v-if="!useText && $q.platform.is.capacitor"
-          v-model="mobileFileLabel"
-          label="Select Backup File Mobile",  
-          @click="OpenCapFileSelector()"
+          label="Select Backup File",
+          :accept="$q.platform.is.capacitor?'':'.drb, .drb.json'"
       )
           template(v-slot:append)
           q-icon(name="attach_file")
@@ -40,11 +35,7 @@ q-card(style="width:75vw")
 import { Vue, Component } from 'vue-property-decorator';
 import { SavedDreamList } from '../models/models';
 import validator from 'validator';
-import Plugins, {
-  Filesystem,
-  FilesystemDirectory,
-  FilesystemEncoding,
-} from '@capacitor/core';
+
 @Component
 export default class ImportBackup extends Vue {
   useText = false;
@@ -52,12 +43,9 @@ export default class ImportBackup extends Vue {
   file = null;
   mobileFileLabel = '';
 
-  parseJsonDreams(input: string): SavedDreamList[] {
+  parseJsonDreams(input: any): SavedDreamList[] {
     let result = new Array<SavedDreamList>();
-    // let data = JSON.parse(
-    //   this.be64regex.test(input) ? atob(input) : input
-    // ) as any;
-    let data = this.FileValidator(input);
+    let data = input; //this.FileValidator(input);
 
     if (data != undefined) {
       console.log('Parsing JSON :: ' + JSON.stringify(data));
@@ -81,7 +69,7 @@ export default class ImportBackup extends Vue {
   FileValidator(input: string) {
     let data = undefined as any;
     console.log(input);
-    if (validator.isJSON(atob(input))) {
+    if (validator.isBase64(input)) {
       data = JSON.parse(atob(input));
     } else if (validator.isJSON(input)) {
       data = JSON.parse(input);
@@ -92,12 +80,15 @@ export default class ImportBackup extends Vue {
         message: 'Invalid format! Only DreamReader backups are readable.',
       });
     }
+    console.log(data);
     return data;
   }
 
   async importSaveData(input: string) {
+    console.log(input);
+    const data = this.FileValidator(input);
     const activeDate = this.$store.getters.getActiveDate;
-    const parsedData = this.parseJsonDreams(input);
+    const parsedData = this.parseJsonDreams(data);
     await parsedData.forEach(async (date) => {
       console.log(JSON.stringify(date) + '--' + activeDate);
       await this.$store.dispatch('SetActiveDate', date.date);
@@ -123,12 +114,7 @@ export default class ImportBackup extends Vue {
     if (this.useText) {
       strData = this.rawText;
     } else {
-      if (this.$q.platform.is.capacitor) {
-        strData = (this.file as any).dataURI.split('base64,')[1];
-      } else {
-        //Assuming it's desktop/web
-        strData = await ((this.file as unknown) as File).text();
-      }
+      strData = await ((this.file as unknown) as File).text();
     }
     console.log(strData);
     await this.importSaveData(strData);
@@ -136,21 +122,6 @@ export default class ImportBackup extends Vue {
     this.$q.loadingBar.stop();
     this.file = null;
     this.$emit('CloseImport');
-  }
-
-  async OpenCapFileSelector() {
-    const file = await (window as any).chooser.getFile();
-    this.file = file;
-    this.mobileFileLabel = file.name;
-    console.log(file);
-    // let selectedFile = await FileSelector.fileSelector({
-    //   multiple_selection: false,
-    //   ext: ['.drb', '.drb.json'],
-    // });
-    // console.log(selectedFile);
-    // this.$q.notify(selectedFile);
-    // if (this.$q.platform.is.android) {
-    // }
   }
 }
 </script>
