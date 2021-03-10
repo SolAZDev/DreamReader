@@ -38,7 +38,7 @@
     "localforage": "^1.9.0",
     "moment": "^2.29.1",
     "prettier": "^2.2.1",
-    "pug": "^3.0.0",
+    "pug": "^3.0.1",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.1.0",
     "quasar": "^1.0.0",
