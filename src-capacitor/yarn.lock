@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@byteowls/capacitor-filesharer@^2.0.0":
+  "integrity" "sha512-OD5qIV8OgusqxkN2SQOTZmB+mKz7aJXwMuhqSmLaOMIQt9k7rc4biYdghzTYyn7Y3KkoDfyef352unSKpwoveA=="
+  "resolved" "https://registry.npmjs.org/@byteowls/capacitor-filesharer/-/capacitor-filesharer-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "file-saver" "^2.0.2"
+
 "@capacitor/android@^2.4.4":
   "integrity" "sha512-7jcmwheo94dJEOX1z4r3SlZrL+MvESav1xsUwC5ydLFZCpuvBKJ0szbDNWzCAglgpXmW9hC0WdwYBErgDrDPRg=="
   "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-2.4.7.tgz"
@@ -227,6 +234,11 @@
   "version" "2.0.0"
   dependencies:
     "escape-string-regexp" "^1.0.5"
+
+"file-saver@^2.0.2":
+  "integrity" "sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA=="
+  "resolved" "https://registry.npmjs.org/file-saver/-/file-saver-2.0.5.tgz"
+  "version" "2.0.5"
 
 "fs-extra@^4.0.3":
   "integrity" "sha512-q6rbdDd1o2mAnQreO7YADIxf/Whx4AHBiRf6d+/cVT8h44ss+lHgxf1FemcqDnQt9X3ct4McHr+JMGlYSsK7Cg=="

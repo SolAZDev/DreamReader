@@ -877,6 +877,13 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@byteowls/capacitor-filesharer@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@byteowls/capacitor-filesharer/-/capacitor-filesharer-2.0.0.tgz#35423759a3a7c9ba107298d51d8a124b651cc90e"
+  integrity sha512-OD5qIV8OgusqxkN2SQOTZmB+mKz7aJXwMuhqSmLaOMIQt9k7rc4biYdghzTYyn7Y3KkoDfyef352unSKpwoveA==
+  dependencies:
+    file-saver "^2.0.2"
+
 "@capacitor/android@^2.4.4":
   version "2.4.7"
   resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-2.4.7.tgz#c7edc5322dbd1db79c61b1f4e579b7b81024ce5d"
@@ -4714,6 +4721,11 @@ file-loader@6.2.0:
   dependencies:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
+
+file-saver@^2.0.2:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.5.tgz#d61cfe2ce059f414d899e9dd6d4107ee25670c38"
+  integrity sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==
 
 file-type@^3.8.0:
   version "3.9.0"

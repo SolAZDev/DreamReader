@@ -28,6 +28,7 @@ q-card(style="width:75vw")
 import { Vue, Component } from 'vue-property-decorator';
 import moment from 'moment';
 import { exportFile, copyToClipboard } from 'quasar';
+import { FilesystemDirectory, Plugins } from '@capacitor/core';
 
 @Component
 export default class ExportBackup extends Vue {
@@ -66,9 +67,7 @@ export default class ExportBackup extends Vue {
       ? 'text/plain'
       : 'application/json;charset=utf-8';
     if (this.$q.platform.is.capacitor) {
-    }
-    if (this.$q.platform.is.cordova) {
-      await this.cordAndExport(fileName, data, mimeType);
+      await this.ShareExport(fileName, data, mimeType);
     }
     if (this.$q.platform.is.desktop || this.$q.platform.is.electron) {
       const status = exportFile(fileName, data, mimeType);
@@ -84,9 +83,31 @@ export default class ExportBackup extends Vue {
     });
   }
 
-  async cordAndExport(fileName: string, data: string, mimetype: string) {
-    const file = await (window as any).chooser.getFile('.drb, .drb.json');
-    console.log(file);
+  async ShareExport(fileName: string, data: string, mimetype: string) {
+    console.log(data);
+    await Plugins.Filesystem.writeFile({
+      path: 'DreamReader/' + fileName,
+      data: btoa(data),
+      directory: FilesystemDirectory.ExternalStorage,
+      recursive: true,
+    });
+    if (this.$q.platform.is.ios) {
+      this.$q.notify({
+        message: 'File ' + fileName + ' exported to Documents folder',
+        position: 'top',
+      });
+    }
+    if (this.$q.platform.is.android) {
+      this.$q.notify({
+        message: 'File ' + fileName + ' exported to Local Storage',
+        position: 'top',
+      });
+    }
+    await Plugins.FileSharer.share({
+      filename: fileName,
+      base64Data: btoa(data),
+      contentType: mimetype,
+    });
   }
 }
 </script>

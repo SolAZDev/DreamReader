@@ -6,14 +6,18 @@
 <script lang="ts">
 import { Settings } from './models/models';
 import { Vue, Component, Watch } from 'vue-property-decorator';
+import { registerWebPlugin } from '@capacitor/core';
+import { FileSharer } from '@byteowls/capacitor-filesharer';
 @Component
 export default class App extends Vue {
   created() {
-    this.$store.dispatch('initDB');
     this.$store.dispatch('LoadSettings');
     this.$store.dispatch('ReloadSavedData');
     this.$root.$on('ReloadSettings', () => this.SettingsManager());
     this.SettingsManager();
+    if (this.$q.platform.is.capacitor) {
+      this.RegisterPlugins();
+    }
   }
 
   get settings() {
@@ -27,6 +31,10 @@ export default class App extends Vue {
 
   SettingsManager() {
     this.$q.dark.set(this.settings.darkMode);
+  }
+
+  RegisterPlugins() {
+    registerWebPlugin(FileSharer);
   }
 }
 </script>

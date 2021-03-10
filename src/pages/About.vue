@@ -30,11 +30,16 @@ q-page(padding)
 import { Vue, Component } from 'vue-property-decorator';
 @Component({})
 export default class About extends Vue {
-  RepoLink = 'https://github.com/SolAZDev/DreamReader/'
+  RepoLink = 'https://github.com/SolAZDev/DreamReader/';
   knownBugs = [
-    {icon:'report_problem', issue:'App Update Refresh',statusType:'Under Investigation', statusText:"When an update is released, the PWA Version may not load properly (blank page) in this case we recommend deleting the page's cache, but NOT it's data."},
-    {icon:'bug_report', issue: 'Import/Export Android', statusType:'Under Investigation', statusText:'Android Users can\'t Import nor Export their Backups from the app, this is due to permission limitations'},
-  ]
+    {
+      icon: 'report_problem',
+      issue: 'App Update Refresh',
+      statusType: 'Under Investigation',
+      statusText:
+        "When an update is released, the PWA Version may not load properly (blank page) in this case we recommend deleting the page's cache, but NOT it's data.",
+    },
+  ];
 }
 </script>
 <style lang="sass" scoped>

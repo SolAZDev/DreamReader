@@ -1,7 +1,7 @@
 package com.SolAZDev.DreamReader;
 
 import android.os.Bundle;
-import com.bkon.capacitor.fileselector.FileSelector;
+import com.byteowls.capacitor.filesharer.FileSharerPlugin;
 import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.Plugin;
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ public class MainActivity extends BridgeActivity {
         savedInstanceState,
         new ArrayList<Class<? extends Plugin>>() {
           {
-            add(FileSelector.class);
             // Additional plugins you've installed go here
             // Ex: add(TotallyAwesomePlugin.class);
+            add(FileSharerPlugin.class);
           }
         }
       );

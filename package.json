@@ -20,6 +20,7 @@
     "build:electron": "quasar build -m electron"
   },
   "dependencies": {
+    "@byteowls/capacitor-filesharer": "^2.0.0",
     "@capacitor/android": "^2.4.5",
     "@capacitor/cli": "^2.4.5",
     "@capacitor/core": "^2.4.5",
