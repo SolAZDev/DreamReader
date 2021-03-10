@@ -103,11 +103,11 @@ export default class ExportBackup extends Vue {
         position: 'top',
       });
     }
-    await Plugins.FileSharer.share({
-      filename: fileName,
-      base64Data: btoa(data),
-      contentType: mimetype,
-    });
+    // await Plugins.FileSharer.share({
+    //   filename: fileName,
+    //   base64Data: btoa(data),
+    //   contentType: mimetype,
+    // });
   }
 }
 </script>
