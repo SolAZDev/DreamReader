@@ -35,6 +35,7 @@ q-card(style="width:75vw")
 import { Vue, Component } from 'vue-property-decorator';
 import { SavedDreamList } from '../models/models';
 import validator from 'validator';
+import bus from '../utils/vueBus';
 
 @Component
 export default class ImportBackup extends Vue {
@@ -105,6 +106,7 @@ export default class ImportBackup extends Vue {
     });
     this.$store.dispatch('SetActiveDate', activeDate);
     this.$q.notify('Import Complete!');
+    bus.$emit('closeImport');
   }
 
   async readInputJson() {
@@ -121,7 +123,15 @@ export default class ImportBackup extends Vue {
     this.$q.loading.isActive = false;
     this.$q.loadingBar.stop();
     this.file = null;
-    this.$emit('CloseImport');
+    // this.$emit('CloseImport');
   }
 }
 </script>
+<style lang="sass">
+.q-field__native
+  color: rgba(0, 0, 0, 0.87) !important
+
+.q-field--dark
+ .q-field__native
+   color: white !important
+</style>

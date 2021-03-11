@@ -28,13 +28,19 @@ import { Vue, Component } from 'vue-property-decorator';
 import { Settings } from '../models/models';
 import ImportBackup from '../components/ImportBackup.vue';
 import ExportBackup from '../components/ExportBackup.vue';
+import bus from '../utils/vueBus';
 
 @Component({ components: { ImportBackup, ExportBackup } })
 export default class SettingsPage extends Vue {
   settings = { darkMode: false } as Settings;
   exportWindowOpen = false;
   importWindowOpen = false;
-  importing = false;
+
+  created() {
+    //Unused for now
+    bus.$on('closeExport', () => (this.exportWindowOpen = false));
+    bus.$on('closeImport', () => (this.importWindowOpen = false));
+  }
 
   mounted() {
     this.settings = this.$store.getters.getSettings;

@@ -11,6 +11,10 @@ const routes: RouteConfig[] = [
         component: () => import('pages/Symbol.vue'),
       },
       {
+        path: '/Symbol/:id',
+        component: () => import('pages/Symbol.vue'),
+      },
+      {
         path: '/History',
         component: () => import('pages/History.vue'),
       },

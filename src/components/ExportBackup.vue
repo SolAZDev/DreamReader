@@ -21,7 +21,8 @@ q-card(style="width:75vw")
             q-icon(name="content_copy" ripple @click="copyData()")  
     q-card-actions(align="around")
       q-btn(flat @click="exportData()") Save Backup
-      q-btn(flat v-close-popup) Cancel
+      q-btn(flat @click="exportData(true)" v-if="$q.platform.is.capacitor") Save & Share
+      q-btn(flat v-close-popup v-if="!$q.platform.is.capacitor") Cancel
 </template>
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -29,6 +30,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import moment from 'moment';
 import { exportFile, copyToClipboard } from 'quasar';
 import { FilesystemDirectory, Plugins } from '@capacitor/core';
+import bus from '../utils/vueBus';
 
 @Component
 export default class ExportBackup extends Vue {
@@ -40,12 +42,12 @@ export default class ExportBackup extends Vue {
     return this.$store.getters.getLocalForage;
   }
 
-  async exportData() {
+  async exportData(share = false) {
     const data = await this.outputJson();
     if (this.useText) {
       this.rawText = data;
     } else {
-      this.downloadOutputJson(data);
+      this.downloadOutputJson(data, share);
     }
   }
 
@@ -58,7 +60,7 @@ export default class ExportBackup extends Vue {
     return this.base64 ? btoa(res) : res;
   }
 
-  async downloadOutputJson(data: string) {
+  async downloadOutputJson(data: string, share = false) {
     const fileName =
       'DreamReader-' +
       moment().format('MM-DD-YYYY-HH-MM') +
@@ -67,11 +69,12 @@ export default class ExportBackup extends Vue {
       ? 'text/plain'
       : 'application/json;charset=utf-8';
     if (this.$q.platform.is.capacitor) {
-      await this.ShareExport(fileName, data, mimeType);
+      await this.ShareExport(fileName, data, mimeType, share);
     }
     if (this.$q.platform.is.desktop || this.$q.platform.is.electron) {
       const status = exportFile(fileName, data, mimeType);
       console.log(status);
+      bus.$emit('closeExport');
     }
   }
 
@@ -83,7 +86,12 @@ export default class ExportBackup extends Vue {
     });
   }
 
-  async ShareExport(fileName: string, data: string, mimetype: string) {
+  async ShareExport(
+    fileName: string,
+    data: string,
+    mimetype: string,
+    share = false
+  ) {
     console.log(data);
     await Plugins.Filesystem.writeFile({
       path: 'DreamReader/' + fileName,
@@ -94,20 +102,25 @@ export default class ExportBackup extends Vue {
     if (this.$q.platform.is.ios) {
       this.$q.notify({
         message: 'File ' + fileName + ' exported to Documents folder',
-        position: 'top',
+        position: share ? 'top' : 'bottom',
+        timeout: 1000,
       });
     }
     if (this.$q.platform.is.android) {
       this.$q.notify({
         message: 'File ' + fileName + ' exported to Local Storage',
-        position: 'top',
+        position: share ? 'top' : 'bottom',
+        timeout: 1000,
       });
     }
-    // await Plugins.FileSharer.share({
-    //   filename: fileName,
-    //   base64Data: btoa(data),
-    //   contentType: mimetype,
-    // });
+    if (share) {
+      await Plugins.FileSharer.share({
+        filename: fileName,
+        base64Data: btoa(data),
+        contentType: mimetype,
+      });
+    }
+    // bus.$emit('closeExport');
   }
 }
 </script>

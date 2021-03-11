@@ -5,7 +5,7 @@ q-page(padding)
 		.row(style="padding: 10px")
 			.col-10
 				small Dream Symbol
-				.text-h4 {{ Dream.symbol }}
+				.text-h4(@click="CopyLink()") {{ Dream.symbol }} #[q-icon(name='share', size='xs')]
 			.col-2(v-if="Dream.id != -1", style="height: 100%")
 				.self-center.justify-center(style="display: flex", v-if="!isSaved")
 					q-btn(
@@ -30,9 +30,11 @@ q-page(padding)
 				span Meanings
 				ol
 					li(v-for="item in Dream.meanings", :key="item.id")
-						p(style="text-alignment: justify") {{ item }}
+						p {{ item }}
 </template>
 <script lang="ts">
+import moment from 'moment';
+import { copyToClipboard } from 'quasar';
 import { Vue, Component } from 'vue-property-decorator';
 import { SymbolModel } from '../models/models';
 import * as DreamDB from '../utils/dreams';
@@ -52,7 +54,8 @@ export default class SymbolView extends Vue {
     );
   }
   mounted() {
-    const id = sessionStorage.getItem('CurrentDreamId');
+    const id =
+      this.$route.params.id || sessionStorage.getItem('CurrentDreamId');
     if (id != null) {
       this.Dream = this.loadDream(parseInt(id));
     }
@@ -60,6 +63,9 @@ export default class SymbolView extends Vue {
 
   get isSaved() {
     return this.$store.getters.dreamIsSavedOnActiveDate(this.Dream.id);
+  }
+  get currentDate() {
+    return this.$store.getters.getActiveDate;
   }
   loadDream(id: number): SymbolModel {
     // this.$root.$emit('test');
@@ -83,11 +89,7 @@ export default class SymbolView extends Vue {
         this.$store.getters.getActiveDate
     );
     this.$store.dispatch('SaveDream', { id: this.Dream.id });
-    // this.$q.notify(
-    //   this.Dream.symbol +
-    //     ' was added to your dream on ' +
-    //     this.$store.getters.getActiveDate
-    // );
+    this.notify();
   }
   RemoveDream() {
     const opt = {
@@ -95,6 +97,7 @@ export default class SymbolView extends Vue {
       id: this.Dream.id,
     };
     this.$store.dispatch('RemoveDream', opt);
+    this.notify(true);
   }
   async SaveToHistory(id: number) {
     let lsh = await this.$store.getters.getLocalForage.getItem('history');
@@ -111,9 +114,29 @@ export default class SymbolView extends Vue {
       JSON.stringify(fArray.slice(0, 50))
     );
   }
+
+  notify(deleted = false) {
+    this.$q.notify({
+      message:
+        'Dream ' +
+        (deleted
+          ? 'deleted from '
+          : 'saved to ' + moment(this.$store.getters.getActiveDate).format()),
+      timeout: 500,
+    });
+  }
+
+  async CopyLink() {
+    const url = 'https://SolAZDev.github.io/DreamReader/#/Symbol/';
+    await copyToClipboard(url + this.Dream.id);
+    this.$q.notify('Link Copied to Clipboard!');
+  }
 }
 </script>
 <style lang="sass">
 h4, big
   margin: 0px
+
+p
+ text-alignment: justify
 </style>
