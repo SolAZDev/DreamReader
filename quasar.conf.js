@@ -109,6 +109,11 @@ module.exports = configure(function (ctx) {
 
       // Quasar plugins
       plugins: ['Notify', 'LoadingBar', 'Loading'],
+      config: {
+        notify: {
+          timeout: 500,
+        },
+      },
     },
 
     // animations: 'all', // --- includes all animations

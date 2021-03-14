@@ -119,9 +119,8 @@ export default class SymbolView extends Vue {
     this.$q.notify({
       message:
         'Dream ' +
-        (deleted
-          ? 'deleted from '
-          : 'saved to ' + moment(this.$store.getters.getActiveDate).format()),
+        (deleted ? 'deleted from ' : 'saved to ') +
+        moment(this.$store.getters.getActiveDate).format('MMMM/DD/YYYY'),
       timeout: 500,
     });
   }

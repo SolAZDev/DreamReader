@@ -23,7 +23,12 @@ q-page(padding)
       q-card
         q-card-section.text-subtitle2 {{bug.statusType}}
         q-card-section {{bug.statusText}}
-          
+
+  .text-h6.text-center Known Features Wishlist
+  .text-center(v-if="TodoWishlist.length==0") Seems we don't have known features wishlisted at the time of this build. Feel free to suggest some at the Github Repo!
+  q-list(v-if="TodoWishlist.length>0")
+    q-list-item(v-for="wish in TodoWishlist") 
+      q-item-label {{wish}}
 </template>
 
 <script lang="ts">
@@ -34,11 +39,15 @@ export default class About extends Vue {
   knownBugs = [
     {
       icon: 'report_problem',
-      issue: 'App Update Refresh',
+      issue: 'PWA Update Refresh',
       statusType: 'Under Investigation',
       statusText:
         "When an update is released, the PWA Version may not load properly (blank page) in this case we recommend deleting the page's cache, but NOT it's data.",
     },
+  ];
+  TodoWishlist = [
+    'Dream Note Parser - Find any symbols in saved notes, leave as option in settings',
+    'Themes, Modify Colors and Add options for iOS Styling',
   ];
 }
 </script>
