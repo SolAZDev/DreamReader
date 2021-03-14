@@ -23,4 +23,5 @@ export interface ExportableList {
 
 export interface Settings {
   darkMode: boolean;
+  invertNoteEdit: boolean;
 }

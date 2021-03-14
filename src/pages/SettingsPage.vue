@@ -3,11 +3,22 @@ q-page(padding)
   .text-center.text-h6 Settings
   .q-pa-md
     q-list
+      q-item-label(header) Settings
+
       q-item(tag="label" v-ripple)
         q-item-section
           q-item-label Dark Mode
         q-item-section(avatar)
           q-toggle(v-model="settings.darkMode" @input="saveSettings()")
+
+      q-item(tag="label" v-ripple)
+        q-item-section
+          q-item-label Note Editor Bottom Toolbar
+        q-item-section(avatar)
+          q-toggle(v-model="settings.invertNoteEdit" @input="saveSettings()")
+
+      q-separator(spaced)
+      q-item-label(header) Backups
       q-item(tag="label" v-ripple @click="importWindowOpen=true")
         q-item-section
           q-item-label Import Backup
@@ -32,7 +43,7 @@ import bus from '../utils/vueBus';
 
 @Component({ components: { ImportBackup, ExportBackup } })
 export default class SettingsPage extends Vue {
-  settings = { darkMode: false } as Settings;
+  settings = { darkMode: false, invertNoteEdit: false } as Settings;
   exportWindowOpen = false;
   importWindowOpen = false;
 

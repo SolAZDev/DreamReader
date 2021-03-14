@@ -31,6 +31,13 @@ export default class NoteEdit extends Vue {
       },
     ],
   ];
+  get Settings() {
+    return this.$store.getters.getSettings;
+  }
+  get invertEditor() {
+    // return this.$q.screen.width < this.$q.screen.sizes.lg;
+    return this.Settings.invertNoteEdit;
+  }
   mounted() {
     this.loadNote();
   }
@@ -39,9 +46,6 @@ export default class NoteEdit extends Vue {
       'N' + this.activeDate
     );
     this.content = savedNote != null ? savedNote : '';
-  }
-  get invertEditor() {
-    return this.$q.screen.width < this.$q.screen.sizes.lg;
   }
   get activeDate() {
     return this.$store.getters.getActiveDate;
@@ -64,5 +68,10 @@ export default class NoteEdit extends Vue {
   display: flex
   flex-direction: column
   .q-editor
-    flex-grow: 1
+    // flex-grow: 1
+    // display: flex !important
+    // flex-direction: column
+    .q-editor__content
+      // flex-grow:1
+      height:100%
 </style>

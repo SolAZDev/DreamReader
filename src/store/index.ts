@@ -13,7 +13,7 @@ export default store(function ({ Vue }) {
     state: {
       ActiveDate: moment().format('MM/DD/YYYY'),
       SavedDreams: new Array<SavedDreamList>(),
-      Settings: { darkMode: false } as Settings,
+      Settings: { darkMode: false, invertNoteEdit: false } as Settings,
       SavedDates: new Array<string>(),
       local: localforage.createInstance({
         name: 'DreamReader',
@@ -27,6 +27,7 @@ export default store(function ({ Vue }) {
       getActiveDate: (state) => state.ActiveDate,
       getSavedDates: (state) => state.SavedDates,
       getSettings: (state) => state.Settings,
+      getPrettyDate: (state) => moment(state.ActiveDate).format('MMM Do, YYYY'),
       dreamIsSavedOnActiveDate: (state) => (id: number) => {
         const activeDateList = state.SavedDreams.filter(
           (sd) => sd.date === state.ActiveDate
