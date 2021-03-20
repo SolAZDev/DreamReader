@@ -74,7 +74,7 @@ export default class ExportBackup extends Vue {
     if (this.$q.platform.is.desktop || this.$q.platform.is.electron) {
       const status = exportFile(fileName, data, mimeType);
       console.log(status);
-      bus.$emit('closeExport');
+      // bus.$emit('closeExport');
     }
   }
 

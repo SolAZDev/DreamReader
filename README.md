@@ -1,31 +1,32 @@
 # DreamReader (dreamreader)
 
-A dream interpretation dictionary and journaling (web) app.
-
+DreamReader is an offline dream interpretation dictionary and journal app.
 Made Quasar, LocalForage, and DreamMoods as base database.
 
 ## Install the dependencies
 
-```bash
+```
 yarn
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
-```bash
-quasar dev
+```
+quasar dev #-m electron for electron
+quasar dev -m capacitor -T android
 ```
 
 ### Lint the files
 
-```bash
+```
 yarn run lint
 ```
 
 ### Build the app for production
 
-```bash
-quasar build
+```
+quasar build -m pwa/electron #for web or electron
+yarn build:capand:sign #for android + signing
 ```
 
 ### Customize the configuration
