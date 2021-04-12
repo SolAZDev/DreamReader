@@ -3,5 +3,10 @@
   "vetur.format.enable": false,
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "vetur.experimental.templateInterpolationService": true
+  "vetur.experimental.templateInterpolationService": true,
+  "cSpell.words": [
+    "INDEXEDDB",
+    "localforage",
+    "vuex"
+  ]
 }

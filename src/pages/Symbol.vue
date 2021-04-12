@@ -5,7 +5,7 @@ q-page(padding)
 		.row(style="padding: 10px")
 			.col-10
 				small Dream Symbol
-				.text-h4(@click="CopyLink()") {{ Dream.symbol }} #[q-icon(name='share', size='xs')]
+				.text-h4(@click="CopyLink()") {{ Dream.symbol }} #[q-icon(v-if="Dream.id != -1" name='share', size='xs')]
 			.col-2(v-if="Dream.id != -1", style="height: 100%")
 				.self-center.justify-center(style="display: flex", v-if="!isSaved")
 					q-btn(

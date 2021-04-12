@@ -122,6 +122,8 @@ export default store(function ({ Vue }) {
       },
       async removeDreamOnDate(state, opts: { date: string; id: number }) {
         const dreams = state.SavedDreams.filter((sd) => sd.date == opts.date);
+        // console.log(dreams);
+        // console.log(opts);
         if (dreams.length < 0) {
           return;
         } //Nothing found, how did we get here?
